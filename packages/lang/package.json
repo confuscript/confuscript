@@ -1,45 +1,32 @@
 {
-  "name": "@confuscript/core",
+  "name": "@confuscript/lang",
   "version": "0.0.1",
-  "description": "Confuscript core library",
+  "description": "Confuscript grammar",
   "keywords": [
     "confuscript",
-    "programming",
-    "language",
-    "core",
-    "library"
+    "grammar"
   ],
   "author": "floffah <therealfloffah@gmail.com>",
   "homepage": "https://github.com/confuscript/confuscript",
   "license": "MIT",
-  "main": "dist/core.js",
   "directories": {
-    "dist": "dist",
-    "src": "src",
-    "types": "types"
+    "lang": "lang"
   },
-  "types": "types/core.d.ts",
+  "main": "lang/o/grammar.js",
   "files": [
-    "dist",
-    "types"
+    "lang"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/confuscript/confuscript.git"
   },
-  "scripts": {
-    "test": ""
-  },
   "bugs": {
     "url": "https://github.com/confuscript/confuscript/issues"
   },
-  "dependencies": {
-    "@confuscript/lang": "0.0.1",
-    "nearley": "^2.19.7"
+  "scripts": {
+    "grammar": "npx nearleyc lang/lang.ne -o lang/o/grammar.js"
   },
-  "devDependencies": {
-    "@types/nearley": "^2.11.1",
-    "@types/node": "^14.14.7",
-    "typescript": "^4.0.5"
+  "dependencies": {
+    "nearley": "^2.19.7"
   }
 }
