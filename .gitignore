@@ -1,5 +1,6 @@
 packages/**/types
 packages/**/dist
+packages/lang/lang/o/
 
 # Logs
 logs
