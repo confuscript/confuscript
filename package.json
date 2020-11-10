@@ -6,7 +6,8 @@
   },
   "workspaces": ["packages/*"],
   "scripts": {
-    "build": "yarn workspace @confuscript/lang grammar && yarn workspace @confuscript/core tsc && yarn workspace @confuscript/cli tsc",
+    "build": "yarn workspace @confuscript/lang grammar && yarn tsbuild",
+    "tsbuild": "yarn workspace @confuscript/core tsc && yarn workspace @confuscript/cli tsc",
     "prepack": "yarn build"
   }
 }
