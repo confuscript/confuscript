@@ -1,13 +1,14 @@
 {
   "version": "0.0.1",
   "npmClient": "yarn",
+  "useWorkspaces": true,
   "command": {
     "publish": {
       "ignoreChanges": [
         "*.md"
       ],
       "message": "chore(release): publish",
-      "registry": "https://npm.pkg.github.com"
+      "registry": "https://registry.npmjs.org"
     },
     "bootstrap": {
       "ignore": "component-*",
@@ -15,8 +16,5 @@
         "--no-package-lock"
       ]
     }
-  },
-  "packages": [
-    "packages/*"
-  ]
+  }
 }

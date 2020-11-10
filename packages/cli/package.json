@@ -1,0 +1,38 @@
+{
+  "name": "@confuscript/cli",
+  "version": "0.0.1",
+  "description": "Confuscript command line commands (if you dont want to use the library to interact with confuscript)",
+  "keywords": [
+    "confuscript",
+    "command",
+    "line"
+  ],
+  "author": "floffah <therealfloffah@gmail.com>",
+  "homepage": "https://github.com/confuscript/confuscript",
+  "license": "MIT",
+  "main": "dist/cli.js",
+  "directories": {
+    "src": "src"
+  },
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/confuscript/confuscript.git"
+  },
+  "bugs": {
+    "url": "https://github.com/confuscript/confuscript/issues"
+  },
+  "bin": {
+    "csc": "dist/cli.js"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0",
+    "commander": "^6.2.0",
+    "enquirer": "^2.3.6"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
+}

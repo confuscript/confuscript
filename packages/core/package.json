@@ -1,0 +1,42 @@
+{
+  "name": "@confuscript/core",
+  "version": "0.0.1",
+  "description": "Confuscript core library",
+  "keywords": [
+    "confuscript",
+    "programming",
+    "language",
+    "core",
+    "library"
+  ],
+  "author": "floffah <therealfloffah@gmail.com>",
+  "homepage": "https://github.com/confuscript/confuscript",
+  "license": "MIT",
+  "main": "dist/core.js",
+  "directories": {
+    "dist": "dist",
+    "src": "src",
+    "types": "types"
+  },
+  "types": "types/core.d.ts",
+  "files": [
+    "dist",
+    "types"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/confuscript/confuscript.git"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "bugs": {
+    "url": "https://github.com/confuscript/confuscript/issues"
+  },
+  "dependencies": {
+    "nearley": "^2.19.7"
+  },
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  }
+}
