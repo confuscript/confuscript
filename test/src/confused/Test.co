@@ -1,0 +1,7 @@
+import "confused.Logger"
+
+public class Test {
+    public main():any {
+        Logger.Info("Hello world from TestApp");
+    }
+}

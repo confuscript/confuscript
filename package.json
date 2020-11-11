@@ -2,12 +2,16 @@
   "name": "confuscript-root",
   "private": true,
   "devDependencies": {
+    "@octokit/core": "^3.2.1",
     "lerna": "^3.22.1"
   },
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "build": "yarn workspace @confuscript/lang grammar && yarn tsbuild",
     "tsbuild": "yarn workspace @confuscript/core tsc && yarn workspace @confuscript/cli tsc",
+    "devts": "yarn workspace @confuscript/core tsc -w & yarn workspace @confuscript/cli tsc -w",
     "prepack": "yarn build"
   }
 }
