@@ -24,7 +24,7 @@
     "url": "https://github.com/confuscript/confuscript/issues"
   },
   "scripts": {
-    "grammar": "npx nearleyc lang/lang.ne -o lang/o/grammar.js"
+    "grammar": "mkdir lang/o && npx nearleyc lang/lang.ne -o lang/o/grammar.js"
   },
   "dependencies": {
     "nearley": "^2.19.7"

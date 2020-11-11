@@ -28,7 +28,7 @@
     "url": "git+https://github.com/confuscript/confuscript.git"
   },
   "scripts": {
-    "test": ""
+    "dev": "yarn tsc -w"
   },
   "bugs": {
     "url": "https://github.com/confuscript/confuscript/issues"

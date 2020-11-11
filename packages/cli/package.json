@@ -7,6 +7,9 @@
     "command",
     "line"
   ],
+  "scripts": {
+    "dev": "yarn tsc -w"
+  },
   "author": "floffah <therealfloffah@gmail.com>",
   "homepage": "https://github.com/confuscript/confuscript",
   "license": "MIT",
