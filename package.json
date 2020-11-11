@@ -6,12 +6,14 @@
     "lerna": "^3.22.1"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "test"
   ],
   "scripts": {
     "build": "yarn workspace @confuscript/lang grammar && yarn tsbuild",
     "tsbuild": "yarn workspace @confuscript/core tsc && yarn workspace @confuscript/cli tsc",
     "devts": "yarn workspace @confuscript/core tsc -w & yarn workspace @confuscript/cli tsc -w",
-    "prepack": "yarn build"
+    "prepack": "yarn build",
+    "test": "yarn workspace test test"
   }
 }

@@ -6,7 +6,7 @@ export default class Parser {
     parser: Parse = new Parse(this.grammar)
 
     rootpath: string
-    start: {class: string, method: string, path: string}|undefined
+    start: {class: string, method: string, path: string}
 
     constructor(sourceroot: string, start: { path: string, class: string, method: string }, autostart?: boolean) {
         this.rootpath = sourceroot
@@ -21,8 +21,11 @@ export default class Parser {
         console.log(file)
     }
 
-    export() {
-        return "hi"
+    export(): ExportedParserData {
+        return {
+            rootpath: this.rootpath,
+            start: this.start
+        }
     }
 
     public static create(sourceroot: string, start: string): Parser {
@@ -33,4 +36,9 @@ export default class Parser {
             class: sides[0].split(".")[sides[0].split(".").length - 1]
         }, true)
     }
+}
+
+export interface ExportedParserData {
+    rootpath: string
+    start: {class: string, method: string, path: string}
 }

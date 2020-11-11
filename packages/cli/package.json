@@ -12,10 +12,11 @@
   "license": "MIT",
   "main": "dist/cli.js",
   "directories": {
-    "src": "src"
+    "src": "src",
+    "dist": "dist"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "repository": {
     "type": "git",
