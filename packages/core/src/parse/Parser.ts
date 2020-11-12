@@ -1,5 +1,6 @@
 import {Grammar, Parser as Parse} from "nearley";
 import {resolve, sep} from "path"
+import File from "src/structures/File";
 
 export default class Parser {
     grammar: Grammar = Grammar.fromCompiled(require("@confuscript/lang"))
@@ -7,6 +8,8 @@ export default class Parser {
 
     rootpath: string
     start: {class: string, method: string, path: string}
+
+    filedata: Map<String, File> = new Map();
 
     constructor(sourceroot: string, start: { path: string, class: string, method: string }, autostart?: boolean) {
         this.rootpath = sourceroot
@@ -18,7 +21,9 @@ export default class Parser {
 
     parse(path: string) {
         let file = resolve(this.rootpath, path.split(".").join(sep) + ".co");
-        console.log(file)
+        let f = new File(file);
+        f.start({})
+        this.filedata.set(file, f);
     }
 
     export(): ExportedParserData {
