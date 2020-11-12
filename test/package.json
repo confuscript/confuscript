@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "test": "node ../packages/cli run"
+    "test": "node ../packages/cli run -d"
   },
   "dependencies": {
     "@confuscript/cli": "0.0.1"

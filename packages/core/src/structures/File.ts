@@ -1,3 +1,5 @@
+import {NearleyOutput} from "./output";
+
 export default class File {
     path: string
 
@@ -5,7 +7,7 @@ export default class File {
         this.path = path;
     }
 
-    start(parsed: any) {
-        
+    start(_parsed: NearleyOutput) {
+
     }
 }

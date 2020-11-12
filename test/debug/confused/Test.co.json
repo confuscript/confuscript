@@ -1,0 +1,47 @@
+[
+  {
+    "type": "rootimport",
+    "location": "confused.Logger"
+  },
+  "\r\n",
+  "\r\n",
+  {
+    "type": "rootclass",
+    "name": "Test",
+    "body": [
+      "\r\n",
+      "    ",
+      {
+        "type": "method",
+        "name": "main",
+        "public": true,
+        "returns": {
+          "type": "type",
+          "is": "any"
+        },
+        "body": [
+          "\r\n",
+          "        ",
+          {
+            "type": "call",
+            "calls": [
+              "Logger",
+              "Info"
+            ],
+            "values": [
+              {
+                "type": "string",
+                "value": "Hello world from TestApp"
+              }
+            ]
+          },
+          "\r\n",
+          "    "
+        ]
+      },
+      "\r\n"
+    ],
+    "public": true
+  },
+  "\r\n"
+]
