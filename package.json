@@ -1,0 +1,32 @@
+{
+  "name": "confuscript",
+  "version": "0.0.1",
+  "description": "Confused programming language",
+  "author": "Floffah",
+  "license": "LGPL-3.0",
+  "private": true,
+  "devDependencies": {
+    "@octokit/core": "^3.3.1",
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "all-contributors-cli": "^6.20.0",
+    "eslint": "^7.22.0",
+    "eslint-config-prettier": "^8.1.0",
+    "lerna": "^4.0.0",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.3"
+  },
+  "workspaces": [
+    "packages/*",
+    "test",
+    "scripts"
+  ],
+  "scripts": {
+    "build": "node scripts/dist/build.js",
+    "dev": "node scripts/dist/build.js dev",
+    "prepack": "yarn build build -p",
+    "test": "yarn workspace test test",
+    "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
+    "allc": "yarn all-contributors"
+  }
+}

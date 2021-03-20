@@ -1,0 +1,36 @@
+{
+  "enableTerminal": true,
+  "allowedTargets": [
+    "win",
+    "linux"
+  ],
+  "packagePrefix": "@confuscript/",
+  "commands": [
+    {
+      "type": "custom",
+      "package": "lang",
+      "command": "nearleyc src/lang.ne -o grammar.js",
+      "runInEnvironments": [
+        "prod"
+      ]
+    },
+    {
+      "type": "typescript",
+      "useAlternateConfig": false,
+      "runInEnvironments": [
+        "dev",
+        "prod"
+      ],
+      "package": "core"
+    },
+    {
+      "type": "typescript",
+      "useAlternateConfig": false,
+      "runInEnvironments": [
+        "dev",
+        "prod"
+      ],
+      "package": "trees"
+    }
+  ]
+}

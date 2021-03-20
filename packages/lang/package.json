@@ -1,0 +1,13 @@
+{
+  "name": "@confuscript/lang",
+  "version": "0.0.1",
+  "main": "grammar.js",
+  "description": "Confuscript's grammar",
+  "dependencies": {
+    "moo": "^0.5.1",
+    "nearley": "^2.20.1"
+  },
+  "scripts": {
+    "grammar": "npx nearleyc src/lang.ne -o grammar.js"
+  }
+}

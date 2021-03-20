@@ -1,0 +1,13 @@
+{
+  "name": "@confuscript/core",
+  "description": "A package containing common structures",
+  "version": "0.0.1",
+  "devDependencies": {
+    "@types/nearley": "^2.11.1",
+    "@types/node": "^14.14.35",
+    "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "nearley": "^2.20.1"
+  }
+}
