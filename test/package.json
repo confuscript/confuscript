@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "description": "Confuscript test",
+  "license": "GPL-3.0",
+  "private": true,
+  "dependencies": {
+    "@confuscript/cli": "0.0.1"
+  },
+  "scripts": {
+    "test": "node ../packages/cli build"
+  }
+}

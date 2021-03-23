@@ -31,6 +31,15 @@
         "prod"
       ],
       "package": "trees"
+    },
+    {
+      "type": "typescript",
+      "useAlternateConfig": false,
+      "runInEnvironments": [
+        "dev",
+        "prod"
+      ],
+      "package": "cli"
     }
   ]
 }

@@ -9,6 +9,8 @@
         return rules
     }
 
+    function all(d) { return [...d] }
+
     const l =
         [
         ".",
@@ -23,7 +25,7 @@
             value: v => v.slice(1, -1)
         },
         word: {
-            match: /\w+/,
+            match: /[A-z0-9]+/,
             lineBreaks: true,
             next: "main"
         },
@@ -42,11 +44,11 @@
 @include "./util/comment.ne"
 @include "./structures/imports.ne"
 
-main -> m:+
+root -> main:+ {%d => d[0]%}
 
-m -> comment
-    | import
-    | %s
+main -> import {%id%}
+    | comment {%id%}
+    | %ws {%d => d[0].value%}
 
 @{%
     const lexer = moo.states({

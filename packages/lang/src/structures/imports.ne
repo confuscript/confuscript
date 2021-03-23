@@ -2,6 +2,6 @@
 
 @include "../util/spaces.ne"
 
-import -> "import" _ moreimport:+ %word {% (d) => ({type: "import", path: [...d[2], d[3]]}) %}
+import -> "import" _ %word moreimport:+  {% (d) => ({type: "import", path: [d[2].value, ...(d[3].map(x => x.value))]}) %}
 
-moreimport -> %word "." {% initial %}
+moreimport -> _:? "." _:? %word {% d => d[3] %}

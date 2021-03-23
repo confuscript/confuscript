@@ -23,6 +23,34 @@
             </SchemaInfo>
           </value>
         </entry>
+        <entry key="project.schema">
+          <value>
+            <SchemaInfo>
+              <option name="name" value="project.schema" />
+              <option name="relativePathToSchema" value="packages/core/project.schema.json" />
+              <option name="patterns">
+                <list>
+                  <Item>
+                    <option name="pattern" value="true" />
+                    <option name="path" value="*.confuscriptrc" />
+                    <option name="mappingKind" value="Pattern" />
+                  </Item>
+                  <Item>
+                    <option name="pattern" value="true" />
+                    <option name="path" value="*.projectrc" />
+                    <option name="mappingKind" value="Pattern" />
+                  </Item>
+                  <Item>
+                    <option name="path" value=".confuscriptrc" />
+                  </Item>
+                  <Item>
+                    <option name="path" value=".projectrc" />
+                  </Item>
+                </list>
+              </option>
+            </SchemaInfo>
+          </value>
+        </entry>
       </map>
     </state>
   </component>

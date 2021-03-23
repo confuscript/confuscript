@@ -6,6 +6,11 @@
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
       <excludeFolder url="file://$MODULE_DIR$/scripts/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/trees/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/trees/types" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/types" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

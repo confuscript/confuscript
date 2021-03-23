@@ -25,7 +25,7 @@
     "build": "node scripts/dist/build.js",
     "dev": "node scripts/dist/build.js dev",
     "prepack": "yarn build build -p",
-    "test": "yarn workspace test test",
+    "test": "yarn workspace @confuscript/lang grammar && yarn workspace test test",
     "lint": "yarn eslint . --ext .js,.jsx,.ts,.tsx",
     "allc": "yarn all-contributors"
   }

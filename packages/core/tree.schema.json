@@ -1,0 +1,756 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": {
+        "$ref": "#/definitions/TreeClass"
+    },
+    "definitions": {
+        "AccessorCall": {
+            "description": "For getting the value of/modifying an instanced variable",
+            "properties": {
+                "accessortype": {
+                    "description": "Type of accessor or modifier",
+                    "enum": [
+                        "decrement",
+                        "get",
+                        "increment",
+                        "set"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Location of the instanced variable\ncurrent - get from the current structure\ngrouped - get from the value returned from the last call in a group",
+                    "enum": [
+                        "current",
+                        "grouped"
+                    ],
+                    "type": "string"
+                },
+                "name": {
+                    "description": "Name of the variable\nShould always be declarfed unless the location is set to grouped",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "accessor"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Call": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/StaticCall"
+                },
+                {
+                    "$ref": "#/definitions/InstanceCall"
+                },
+                {
+                    "$ref": "#/definitions/AccessorCall"
+                },
+                {
+                    "$ref": "#/definitions/CallGroup"
+                },
+                {
+                    "$ref": "#/definitions/LocalDeclaration"
+                },
+                {
+                    "$ref": "#/definitions/LocalAccessorCall"
+                },
+                {
+                    "$ref": "#/definitions/Concatenation"
+                },
+                {
+                    "$ref": "#/definitions/Literal"
+                }
+            ]
+        },
+        "CallGroup": {
+            "description": "For chaining calls.\nUsed for example when you are assigning `new SomeClass().someMethod()` to a variable but can be used anywhere and is used by some other call types' state",
+            "properties": {
+                "calls": {
+                    "description": "Grouped calls",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "enum": [
+                        "group"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Concatenation": {
+            "description": "For concatenating values",
+            "properties": {
+                "append": {
+                    "description": "Calls to concatenate onto the end",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "initial": {
+                    "$ref": "#/definitions/Call",
+                    "description": "Call to start concatenating from"
+                },
+                "type": {
+                    "enum": [
+                        "concat"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "FormalParam": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "InstanceCall": {
+            "description": "Calling a method, variable modifier/accessor, etc on an instance\nthis should always be second in a group call when using it on a variable with the first being an accessor call",
+            "properties": {
+                "instpath": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/CallGroup"
+                        },
+                        {
+                            "properties": {
+                                "type": {
+                                    "enum": [
+                                        "this"
+                                    ],
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    ],
+                    "description": "Path to the instance. Usually a group of accessor calls\nIf set to {type: \"this\"} it will grab the method from the current instance"
+                },
+                "methodName": {
+                    "description": "Name of the instanced method",
+                    "type": "string"
+                },
+                "methodparams": {
+                    "description": "Method params",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "enum": [
+                        "instance"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "Literal": {
+            "description": "For defining literal values",
+            "properties": {
+                "ltype": {
+                    "$ref": "#/definitions/Types",
+                    "description": "Literal type"
+                },
+                "type": {
+                    "enum": [
+                        "literal"
+                    ],
+                    "type": "string"
+                },
+                "value": {
+                    "description": "The value as a string\nThis will be parsed into an actual value by the compiler",
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LocalAccessorCall": {
+            "description": "For getting the value of/modifying a variable declared in the current method",
+            "properties": {
+                "accessortype": {
+                    "description": "Type of accessor or modifier",
+                    "enum": [
+                        "decrement",
+                        "get",
+                        "increment",
+                        "set"
+                    ],
+                    "type": "string"
+                },
+                "formalParam": {
+                    "default": false,
+                    "description": "If the variable is a parameter passed to the method",
+                    "type": "boolean"
+                },
+                "name": {
+                    "description": "Name of the variable in the local method context",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "localaccessor"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "LocalDeclaration": {
+            "description": "For declaring a variable in the current method",
+            "properties": {
+                "name": {
+                    "description": "Name of the variable to declared",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "localdeclaration"
+                    ],
+                    "type": "string"
+                },
+                "vartype": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Type of the variable"
+                }
+            },
+            "type": "object"
+        },
+        "StaticCall": {
+            "description": "Calling a method, variable modifier/accessor, etc on a static structure. e.g. info(message: string) on confused.logger.Logger",
+            "properties": {
+                "methodparams": {
+                    "description": "Method params if static call type is method",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "staticpath": {
+                    "description": "should match the format: path.to.Structure#methodName or path.to.Structure#staticVariable. When doing it to a static variable, must be within a group call with the first being this and the second being an accessor call",
+                    "type": "string"
+                },
+                "statictype": {
+                    "description": "type of static call",
+                    "enum": [
+                        "method",
+                        "variable"
+                    ],
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "static"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "StaticTreeClassMethod": {
+            "properties": {
+                "accessibility": {
+                    "$ref": "#/definitions/TreePartAccessorType",
+                    "description": "Accessibility of the static method\ndefault \"public\""
+                },
+                "compiled": {
+                    "description": "Whether or not the static method is aided by the compiler and has no set content\ndefault false",
+                    "type": "boolean"
+                },
+                "content": {
+                    "description": "Content of the static method (the calls it makes)",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "description": "Static method name",
+                    "type": "string"
+                },
+                "params": {
+                    "description": "The parameters that it requires.\nThis is what uniquely identifies it amongst static methods of the same name",
+                    "items": {
+                        "$ref": "#/definitions/FormalParam"
+                    },
+                    "type": "array"
+                },
+                "returns": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string",
+                                "void"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "What type the static method returns"
+                }
+            },
+            "type": "object"
+        },
+        "StaticTreeClassVariable": {
+            "properties": {
+                "accessibility": {
+                    "$ref": "#/definitions/TreePartAccessorType",
+                    "description": "Accessibility of the static variable"
+                },
+                "initially": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/StaticCall"
+                        },
+                        {
+                            "$ref": "#/definitions/InstanceCall"
+                        },
+                        {
+                            "$ref": "#/definitions/AccessorCall"
+                        },
+                        {
+                            "$ref": "#/definitions/CallGroup"
+                        },
+                        {
+                            "$ref": "#/definitions/LocalDeclaration"
+                        },
+                        {
+                            "$ref": "#/definitions/LocalAccessorCall"
+                        },
+                        {
+                            "$ref": "#/definitions/Concatenation"
+                        },
+                        {
+                            "$ref": "#/definitions/Literal"
+                        },
+                        {
+                            "enum": [
+                                "null"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Initial value of the static variable. These calls are processed when the program starts up and before the main method or exports are processed"
+                },
+                "name": {
+                    "description": "Static variable name",
+                    "type": "string"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Static variable type"
+                }
+            },
+            "type": "object"
+        },
+        "TreeClass": {
+            "properties": {
+                "constructable": {
+                    "description": "Whether or not its constructable",
+                    "type": "boolean"
+                },
+                "content": {
+                    "description": "Class content",
+                    "properties": {
+                        "constructors": {
+                            "description": "Constructors, if constructable",
+                            "items": {
+                                "$ref": "#/definitions/TreeClassConstructor"
+                            },
+                            "type": "array"
+                        },
+                        "methods": {
+                            "description": "Methods in the class",
+                            "items": {
+                                "$ref": "#/definitions/TreeClassMethod"
+                            },
+                            "type": "array"
+                        },
+                        "name": {
+                            "description": "Name",
+                            "type": "string"
+                        },
+                        "staticMethods": {
+                            "description": "Static methods in the class",
+                            "items": {
+                                "$ref": "#/definitions/StaticTreeClassMethod"
+                            },
+                            "type": "array"
+                        },
+                        "staticVars": {
+                            "description": "Array of static variables declared in the class",
+                            "items": {
+                                "$ref": "#/definitions/StaticTreeClassVariable"
+                            },
+                            "type": "array"
+                        },
+                        "vars": {
+                            "description": "Array of variables declared in the class",
+                            "items": {
+                                "$ref": "#/definitions/TreeClassVariable"
+                            },
+                            "type": "array"
+                        }
+                    },
+                    "type": "object"
+                },
+                "special": {
+                    "default": "none",
+                    "description": "If this is a special class\nNone - not special\nGlobal - This class has a static instance which is able to be accessed anywhere without importing - It has one property which should just be the name of a static variable on the class with the type of the class that has not been initialised to the compiler can automatically initialise it depending on the context\nStatic-based - This doesn't really affect anything but should be used when a class has no constructors and shouldn't be initialised. Some compilers will not utilise certain instance based helper functions with this special type",
+                    "enum": [
+                        "global",
+                        "none",
+                        "static-based"
+                    ],
+                    "type": "string"
+                },
+                "specialProps": {
+                    "description": "Any properties to link with the special type",
+                    "items": {
+                        "type": [
+                            "string",
+                            "number"
+                        ]
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "description": "Class type of tree element",
+                    "enum": [
+                        "class"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "TreeClassConstructor": {
+            "properties": {
+                "accessibility": {
+                    "$ref": "#/definitions/TreePartAccessorType",
+                    "description": "Accessibility of the constructor"
+                },
+                "compiled": {
+                    "description": "Whether or not the constructor is aided by the compiler and has no set content",
+                    "type": "boolean"
+                },
+                "content": {
+                    "description": "Content of the constructor (the calls it makes)",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "params": {
+                    "description": "Constructor params\nThis is what uniquely identifies it",
+                    "items": {
+                        "$ref": "#/definitions/FormalParam"
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "TreeClassMethod": {
+            "properties": {
+                "accessibility": {
+                    "$ref": "#/definitions/TreePartAccessorType",
+                    "description": "Accessibility of the method\ndefault \"public\""
+                },
+                "compiled": {
+                    "description": "Whether or not the method is aided by the compiler and has no set content\ndefault false",
+                    "type": "boolean"
+                },
+                "content": {
+                    "description": "Content of the method (the calls it makes)",
+                    "items": {
+                        "$ref": "#/definitions/Call"
+                    },
+                    "type": "array"
+                },
+                "name": {
+                    "description": "Method name",
+                    "type": "string"
+                },
+                "params": {
+                    "description": "The parameters that it requires.\nThis is what uniquely identifies it amongst methods of the same name",
+                    "items": {
+                        "$ref": "#/definitions/FormalParam"
+                    },
+                    "type": "array"
+                },
+                "returns": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string",
+                                "void"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "What type the method returns"
+                }
+            },
+            "type": "object"
+        },
+        "TreeClassVariable": {
+            "properties": {
+                "accessibility": {
+                    "$ref": "#/definitions/TreePartAccessorType",
+                    "description": "Accessibility of the variable"
+                },
+                "initially": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/StaticCall"
+                        },
+                        {
+                            "$ref": "#/definitions/InstanceCall"
+                        },
+                        {
+                            "$ref": "#/definitions/AccessorCall"
+                        },
+                        {
+                            "$ref": "#/definitions/CallGroup"
+                        },
+                        {
+                            "$ref": "#/definitions/LocalDeclaration"
+                        },
+                        {
+                            "$ref": "#/definitions/LocalAccessorCall"
+                        },
+                        {
+                            "$ref": "#/definitions/Concatenation"
+                        },
+                        {
+                            "$ref": "#/definitions/Literal"
+                        },
+                        {
+                            "enum": [
+                                "null"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Initial value of the variable. These calls are processed when the class is constructed"
+                },
+                "name": {
+                    "description": "Variable name",
+                    "type": "string"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Variable type"
+                }
+            },
+            "type": "object"
+        },
+        "TreePartAccessorType": {
+            "description": "public = Accessible anywhere (respecting context)\nmodule = Accessible inside the project package (e.g. projectname or src/projectname)\nprotected = Accessible inside the package (e.g. projectname.logger.Logger is accessible from structures inside projectname.logger but not projectname.util)\nprivate = Accessibly only inside the same structure",
+            "enum": [
+                "module",
+                "private",
+                "protected",
+                "public"
+            ],
+            "type": "string"
+        },
+        "Types": {
+            "enum": [
+                "boolean",
+                "byte",
+                "double",
+                "float",
+                "int",
+                "long",
+                "short",
+                "string"
+            ],
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+

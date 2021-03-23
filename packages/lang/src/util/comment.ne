@@ -1,12 +1,12 @@
 @{%
     append({
 		comment: {
-            match: /\/\/.*/,
+            match: /\/\/.+/,
             lineBreaks: true,
             next: "main"
         },
         blockcomment: {
-            match: /\/\*[\w\W]*\*\//,
+            match: /\/\*[\w\W]+\*\//,
             lineBreaks: true,
             next: "main"
         },
@@ -17,9 +17,9 @@
 
 @include "./spaces.ne"
 
-comment -> standardcomment
-    | blockcomment
+comment -> standardcomment {%id%}
+    | blockcomment {%id%}
 
-standardcomment -> %comment _
+standardcomment -> %comment _ {%d => d[0].value%}
 
-blockcomment -> %blockcomment _
+blockcomment -> %blockcomment _ {%d => d[0].value%}

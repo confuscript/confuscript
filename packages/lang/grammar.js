@@ -13,6 +13,8 @@ function id(x) { return x[0]; }
         return rules
     }
 
+    function all(d) { return [...d] }
+
     const l =
         [
         ".",
@@ -27,7 +29,7 @@ function id(x) { return x[0]; }
             value: v => v.slice(1, -1)
         },
         word: {
-            match: /\w+/,
+            match: /[A-z0-9]+/,
             lineBreaks: true,
             next: "main"
         },
@@ -43,12 +45,12 @@ function id(x) { return x[0]; }
 
     append({
 		comment: {
-            match: /\/\/.*/,
+            match: /\/\/.+/,
             lineBreaks: true,
             next: "main"
         },
         blockcomment: {
-            match: /\/\*[\w\W]*\*\//,
+            match: /\/\*[\w\W]+\*\//,
             lineBreaks: true,
             next: "main"
         },
@@ -72,24 +74,28 @@ function id(x) { return x[0]; }
 var grammar = {
     Lexer: lexer,
     ParserRules: [
-    {"name": "_", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws), "_"]},
-    {"name": "_", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws), (lexer.has("comment") ? {type: "comment"} : comment), "_"]},
-    {"name": "comment", "symbols": ["standardcomment"]},
-    {"name": "comment", "symbols": ["blockcomment"]},
-    {"name": "standardcomment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment), "_"]},
-    {"name": "blockcomment", "symbols": [(lexer.has("blockcomment") ? {type: "blockcomment"} : blockcomment), "_"]},
+    {"name": "_", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": d => d[0].value},
+    {"name": "_", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment)], "postprocess": d => d[0].value},
+    {"name": "comment", "symbols": ["standardcomment"], "postprocess": id},
+    {"name": "comment", "symbols": ["blockcomment"], "postprocess": id},
+    {"name": "standardcomment", "symbols": [(lexer.has("comment") ? {type: "comment"} : comment), "_"], "postprocess": d => d[0].value},
+    {"name": "blockcomment", "symbols": [(lexer.has("blockcomment") ? {type: "blockcomment"} : blockcomment), "_"], "postprocess": d => d[0].value},
     {"name": "import$ebnf$1", "symbols": ["moreimport"]},
     {"name": "import$ebnf$1", "symbols": ["import$ebnf$1", "moreimport"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "import", "symbols": [{"literal":"import"}, "_", "import$ebnf$1", (lexer.has("word") ? {type: "word"} : word)], "postprocess": (d) => ({type: "import", path: [...d[2], d[3]]})},
-    {"name": "moreimport", "symbols": [(lexer.has("word") ? {type: "word"} : word), {"literal":"."}], "postprocess": initial},
-    {"name": "main$ebnf$1", "symbols": ["m"]},
-    {"name": "main$ebnf$1", "symbols": ["main$ebnf$1", "m"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
-    {"name": "main", "symbols": ["main$ebnf$1"]},
-    {"name": "m", "symbols": ["comment"]},
-    {"name": "m", "symbols": ["import"]},
-    {"name": "m", "symbols": [(lexer.has("s") ? {type: "s"} : s)]}
+    {"name": "import", "symbols": [{"literal":"import"}, "_", (lexer.has("word") ? {type: "word"} : word), "import$ebnf$1"], "postprocess": (d) => ({type: "import", path: [d[2].value, ...(d[3].map(x => x.value))]})},
+    {"name": "moreimport$ebnf$1", "symbols": ["_"], "postprocess": id},
+    {"name": "moreimport$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "moreimport$ebnf$2", "symbols": ["_"], "postprocess": id},
+    {"name": "moreimport$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "moreimport", "symbols": ["moreimport$ebnf$1", {"literal":"."}, "moreimport$ebnf$2", (lexer.has("word") ? {type: "word"} : word)], "postprocess": d => d[3]},
+    {"name": "root$ebnf$1", "symbols": ["main"]},
+    {"name": "root$ebnf$1", "symbols": ["root$ebnf$1", "main"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "root", "symbols": ["root$ebnf$1"], "postprocess": d => d[0]},
+    {"name": "main", "symbols": ["import"], "postprocess": id},
+    {"name": "main", "symbols": ["comment"], "postprocess": id},
+    {"name": "main", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": d => d[0].value}
 ]
-  , ParserStart: "main"
+  , ParserStart: "root"
 }
 if (typeof module !== 'undefined'&& typeof module.exports !== 'undefined') {
    module.exports = grammar;

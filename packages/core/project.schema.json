@@ -1,0 +1,62 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "Compilation": {
+            "properties": {
+                "bundle": {
+                    "default": false,
+                    "description": "Whether to bundle to a single file\nOnly applies to the node target (however some 3rd party compilers might support it)",
+                    "type": "boolean"
+                },
+                "compiler": {
+                    "default": "builtin",
+                    "description": "Compiler to use",
+                    "type": "string"
+                },
+                "main": {
+                    "default": "main@project.config",
+                    "description": "File entrypoint",
+                    "type": "string"
+                },
+                "out": {
+                    "default": "dist",
+                    "description": "Relative path to output to",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "Platform target\nNative currently not implemented",
+                    "enum": [
+                        "java",
+                        "native",
+                        "node"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "compilation": {
+            "description": "Compilation information",
+            "items": {
+                "$ref": "#/definitions/Compilation"
+            },
+            "type": "array"
+        },
+        "main": {
+            "description": "Main entrypoint file\nThis can be overridden in individual compilation rules",
+            "type": "string"
+        },
+        "name": {
+            "description": "Project name",
+            "type": "string"
+        },
+        "version": {
+            "description": "Project version (semver)",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+

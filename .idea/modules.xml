@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/confuscript-newnew.iml" filepath="$PROJECT_DIR$/.idea/confuscript-newnew.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Confuscript.iml" filepath="$PROJECT_DIR$/.idea/Confuscript.iml" />
     </modules>
   </component>
 </project>

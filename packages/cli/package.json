@@ -1,6 +1,6 @@
 {
-  "name": "@confuscript/trees",
-  "description": "Parses and links Confuscript code into a tree object",
+  "name": "@confuscript/cli",
+  "description": "Command line interface",
   "version": "0.0.1",
   "main": "dist/index.js",
   "license": "GPL-3.0",
@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@confuscript/core": "0.0.1",
-    "chalk": "^4.1.0",
-    "nearley": "^2.20.1"
-  },
-  "types": "types/index.d.ts"
+    "@confuscript/trees": "0.0.1",
+    "@confuscript/lang": "0.0.1",
+    "commander": "^7.1.0",
+    "nearley": "^2.20.1",
+    "source-map-support": "^0.5.19"
+  }
 }

@@ -10,5 +10,5 @@
 
 @lexer lexer
 
-_ -> %ws _
-    | %ws %comment _
+_ -> %ws {%d => d[0].value%}
+    | %comment {%d => d[0].value%}

@@ -1,0 +1,21 @@
+{
+  "name": "Confuscript-Test",
+  "version": "0.0.1",
+  "main": "Main.co",
+  "compilation": [
+    {
+      "compiler": "builtin",
+      "main": "main@project.config",
+      "target": "node",
+      "bundle": false,
+      "out": "dist/node/unbundled"
+    },
+    {
+      "compiler": "builtin",
+      "main": "main@project.config",
+      "target": "node",
+      "bundle": true,
+      "out": "dist/node/bundled"
+    }
+  ]
+}
