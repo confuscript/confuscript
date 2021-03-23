@@ -6,8 +6,8 @@ dist/
 types/
 
 
-# Created by https://www.toptal.com/developers/gitignore/api/node,yarn,jetbrains,webstorm
-# Edit at https://www.toptal.com/developers/gitignore?templates=node,yarn,jetbrains,webstorm
+# Created by https://www.toptal.com/developers/gitignore/api/yarn,node,webstorm,jetbrains,vscode
+# Edit at https://www.toptal.com/developers/gitignore?templates=yarn,node,webstorm,jetbrains,vscode
 
 ### JetBrains ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -238,6 +238,15 @@ dist/
 tmp/
 temp/
 
+### vscode ###
+.vs/*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -322,4 +331,4 @@ temp/
 # and uncomment the following lines
 # .pnp.*
 
-# End of https://www.toptal.com/developers/gitignore/api/node,yarn,jetbrains,webstorm
+# End of https://www.toptal.com/developers/gitignore/api/yarn,node,webstorm,jetbrains,vscode
