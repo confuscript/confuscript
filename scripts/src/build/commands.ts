@@ -8,8 +8,8 @@ export function buildCommands(
     const prefix = config.packagePrefix || "";
     const yarncmd = process.platform === "win32" ? "yarn.cmd" : "yarn";
 
-    const buildYarnCMD = (pkg: string) =>
-        `${yarncmd} workspace ${prefix}${pkg}`;
+    const buildYarnCMD = (pkg: string, dontDoPrefix: boolean = false) =>
+        `${yarncmd} workspace ${dontDoPrefix ? "" : prefix}${pkg}`;
 
     for (const cmd of config.commands) {
         if (cmd.type === "custom") {
@@ -18,7 +18,10 @@ export function buildCommands(
                 (cmd.runInEnvironments || ["dev", "prod"]).includes("dev")
             ) {
                 commands.push({
-                    command: `${buildYarnCMD(cmd.package)} ${cmd.command}`,
+                    command: `${buildYarnCMD(
+                        cmd.package,
+                        cmd.dontUsePackagePrefix,
+                    )} ${cmd.command}`,
                     name: `${prefix}${cmd.package}`,
                 });
             } else if (
@@ -26,7 +29,10 @@ export function buildCommands(
                 (cmd.runInEnvironments || ["dev", "prod"]).includes("prod")
             ) {
                 commands.push({
-                    command: `${buildYarnCMD(cmd.package)} ${cmd.command}`,
+                    command: `${buildYarnCMD(
+                        cmd.package,
+                        cmd.dontUsePackagePrefix,
+                    )} ${cmd.command}`,
                     name: `${prefix}${cmd.package}`,
                 });
             }
@@ -39,7 +45,10 @@ export function buildCommands(
                 (cmd.runInEnvironments || ["dev", "prod"]).includes("dev")
             ) {
                 commands.push({
-                    command: `${buildYarnCMD(cmd.package)} tsc ${doConf}-w`,
+                    command: `${buildYarnCMD(
+                        cmd.package,
+                        cmd.dontUsePackagePrefix,
+                    )} tsc${doConf} -w`,
                     name: `${prefix}${cmd.package}`,
                 });
             } else if (
@@ -47,7 +56,10 @@ export function buildCommands(
                 (cmd.runInEnvironments || ["dev", "prod"]).includes("prod")
             ) {
                 commands.push({
-                    command: `${buildYarnCMD(cmd.package)} tsc ${doConf}`,
+                    command: `${buildYarnCMD(
+                        cmd.package,
+                        cmd.dontUsePackagePrefix,
+                    )} tsc${doConf}`,
                     name: `${prefix}${cmd.package}`,
                 });
             }

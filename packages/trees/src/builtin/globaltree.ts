@@ -27,23 +27,39 @@ export const GlobalTree: Tree = {
                     compiled: false,
                     content: [
                         {
-                            type: "instance",
-                            instpath: { type: "this" },
-                            methodName: "put",
-                            methodparams: [
+                            type: "group",
+                            calls: [
                                 {
-                                    type: "concat",
-                                    initial: {
-                                        type: "localaccessor",
-                                        accessortype: "get",
-                                        name: "message",
-                                        formalParam: true,
+                                    type: "grab",
+                                    name: "put",
+                                    location: {
+                                        type: "current",
                                     },
-                                    append: [
+                                },
+                                {
+                                    type: "run",
+                                    methodParams: [
                                         {
-                                            type: "literal",
-                                            ltype: "string",
-                                            value: "\n",
+                                            name: "message",
+                                            type: "string",
+                                            value: {
+                                                type: "concat",
+                                                initial: {
+                                                    type: "grab",
+                                                    name: "message",
+                                                    location: {
+                                                        type: "formal",
+                                                        expectedType: "string",
+                                                    },
+                                                },
+                                                append: [
+                                                    {
+                                                        type: "literal",
+                                                        ltype: "string",
+                                                        value: "\n",
+                                                    },
+                                                ],
+                                            },
                                         },
                                     ],
                                 },

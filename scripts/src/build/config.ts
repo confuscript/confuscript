@@ -40,6 +40,18 @@ export interface BuildCommand {
      * Environments to run in
      */
     runInEnvironments?: ("dev" | "prod")[];
+    /**
+     * Name of the build
+     */
+    id: string;
+    /**
+     * The name of the package/workspace to give yarn
+     */
+    package: string;
+    /**
+     * Enable if you dont want to prefix this with the package prefix
+     */
+    dontUsePackagePrefix?: boolean;
 }
 
 /**
@@ -58,10 +70,6 @@ export interface TSBuildCommand extends BuildCommand {
      * Relative path to the alternate config
      */
     alternateConfig: string;
-    /**
-     * The name of the package/workspace to give yarn
-     */
-    package: string;
 }
 
 export interface CustomBuildCommand extends BuildCommand {
@@ -69,10 +77,6 @@ export interface CustomBuildCommand extends BuildCommand {
      * The type of build
      */
     type: "custom";
-    /**
-     * The name of the package/workspace to give yarn
-     */
-    package: string;
     /**
      * The command to run in that workspace
      */

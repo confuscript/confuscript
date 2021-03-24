@@ -7,6 +7,14 @@
                     "description": "The command to run in that workspace",
                     "type": "string"
                 },
+                "dontUsePackagePrefix": {
+                    "description": "Enable if you dont want to prefix this with the package prefix",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "Name of the build",
+                    "type": "string"
+                },
                 "package": {
                     "description": "The name of the package/workspace to give yarn",
                     "type": "string"
@@ -37,6 +45,14 @@
             "properties": {
                 "alternateConfig": {
                     "description": "Relative path to the alternate config",
+                    "type": "string"
+                },
+                "dontUsePackagePrefix": {
+                    "description": "Enable if you dont want to prefix this with the package prefix",
+                    "type": "boolean"
+                },
+                "id": {
+                    "description": "Name of the build",
                     "type": "string"
                 },
                 "package": {

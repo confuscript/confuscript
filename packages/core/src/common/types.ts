@@ -33,95 +33,90 @@ export interface ActualParam extends FormalParam {
 export type RunnableContent = Call[];
 
 export type Call =
-    | StaticCall
-    | InstanceCall
-    | AccessorCall
     | CallGroup
     | LocalDeclaration
-    | LocalAccessorCall
     | Concatenation
-    | Literal;
+    | Literal
+    | GrabCall
+    | RunCall;
 
 /**
- * Calling a method, variable modifier/accessor, etc on a static structure. e.g. info(message: string) on confused.logger.Logger
+ * This is for running the property value returned from the last call in the group.
+ * Should only be used after a grab call that targets a runnable method
  */
-export interface StaticCall {
-    type: "static";
+export interface RunCall {
+    type: "run";
     /**
-     * should match the format: path.to.Structure#methodName or path.to.Structure#staticVariable. When doing it to a static variable, must be within a group call with the first being this and the second being an accessor call
+     * The parameters to pass
      */
-    staticpath: string;
-    /**
-     * type of static call
-     */
-    statictype: "method" | "variable";
-    /**
-     * Method params if static call type is method
-     */
-    methodparams?: Call[];
+    methodParams: ActualParam[];
 }
 
 /**
- * Calling a method, variable modifier/accessor, etc on an instance
- * this should always be second in a group call when using it on a variable with the first being an accessor call
+ * For grabbing the property of an object.
+ * This is the main call that a lot of things derive from
  */
-export interface InstanceCall {
-    type: "instance";
+export interface GrabCall {
+    type: "grab";
     /**
-     * Path to the instance. Usually a group of accessor calls
-     * If set to {type: "this"} it will grab the method from the current instance
-     */
-    instpath: { type: "this" } | CallGroup;
-    /**
-     * Name of the instanced method
-     */
-    methodName: string;
-    /**
-     * Method params
-     */
-    methodparams: Call[];
-}
-
-/**
- * For getting the value of/modifying an instanced variable
- */
-export interface AccessorCall {
-    type: "accessor";
-    /**
-     * Name of the variable
-     * Should always be declarfed unless the location is set to grouped
-     */
-    name?: string;
-    /**
-     * Type of accessor or modifier
-     */
-    accessortype: "get" | "increment" | "decrement" | "set";
-    /**
-     * Location of the instanced variable
-     * current - get from the current structure
-     * grouped - get from the value returned from the last call in a group
-     */
-    location: "current" | "grouped";
-}
-
-/**
- * For getting the value of/modifying a variable declared in the current method
- */
-export interface LocalAccessorCall {
-    type: "localaccessor";
-    /**
-     * Name of the variable in the local method context
+     * Name of the property to grab
      */
     name: string;
     /**
-     * Type of accessor or modifier
+     * If not grouped, location of the prop
      */
-    accessortype: "get" | "increment" | "decrement" | "set";
+    location?: CallLocation;
+}
+
+export type CallLocation =
+    | GroupedCallLocation
+    | UndeterminedCallLocation
+    | CurrentCallLocation
+    | FormalParamCallLocation;
+
+/**
+ * Grouped call location type. This will tell the compiler to grab the property from the value returned from the last call in the group
+ */
+export interface GroupedCallLocation {
+    type: "grouped";
+}
+
+/**
+ * Use this if you are not sure where the call is coming from. The compiler will determine where this is from based on the name and context.
+ * This is what the treeifier uses most of the time
+ * Determined by the following order of checks:
+ *  - local variable name
+ *  - formal param name
+ *  - class variable name
+ *  - static sub-structure
+ *  - imports
+ */
+export interface UndeterminedCallLocation {
+    type: "undetermined";
     /**
-     * If the variable is a parameter passed to the method
-     * @default false
+     * Name of the value to find
      */
-    formalParam?: boolean;
+    name: string;
+}
+
+/**
+ * Use this to get the value of a variable declared as a formal parameter in the current method
+ * Uses the name passed from the root grab call definition
+ */
+export interface FormalParamCallLocation {
+    type: "formal";
+    /**
+     * Type to expect.
+     * This is optional and only to prevent accidental mistyping
+     */
+    expectedType?: AllTypes;
+}
+
+/**
+ * Use this to grab the property from the current class instance (not static)
+ */
+export interface CurrentCallLocation {
+    type: "current";
 }
 
 /**

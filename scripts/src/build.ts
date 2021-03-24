@@ -4,7 +4,7 @@ import { existsSync, readFileSync } from "fs";
 import { resolve } from "path";
 import { buildCommands } from "./build/commands";
 import chalk from "chalk";
-import { ChildProcess, spawn } from "child_process";
+import { ChildProcess, spawn, spawnSync } from "child_process";
 import BuildConfig from "./build/config";
 
 program
@@ -33,19 +33,24 @@ program
             console.log(chalk`{green.underline Building ${cmd.name}}`);
             const cmdparts = cmd.command.split(" ");
             console.log(chalk`{gray ${cmd.command}}`);
-            spawn(<string>cmdparts.shift(), cmdparts, {
+            const s = spawnSync(<string>cmdparts.shift(), cmdparts, {
                 stdio: options.quiet ? undefined : "inherit",
                 cwd: options.from
                     ? resolve(process.cwd(), options.from)
                     : process.cwd(),
-            }).on("close", (code) => {
-                if (code !== 0) {
-                    console.log(
-                        chalk`{red There was a problem while building ${cmd.name}.} {gray code ${code}}`,
-                    );
-                    process.exit(0);
-                }
             });
+            if (s.error) {
+                console.log(
+                    chalk`\n\n{red There was a problem while building ${cmd.name}.} {gray ${s.error.message}}`,
+                );
+                process.exit();
+            }
+            if (s.status !== null && s.status !== 0) {
+                console.log(
+                    chalk`\n\n{red There was a problem while building ${cmd.name}.} {gray code ${s.status}}`,
+                );
+                process.exit();
+            }
         }
     });
 

@@ -4,51 +4,8 @@
         "$ref": "#/definitions/TreeClass"
     },
     "definitions": {
-        "AccessorCall": {
-            "description": "For getting the value of/modifying an instanced variable",
-            "properties": {
-                "accessortype": {
-                    "description": "Type of accessor or modifier",
-                    "enum": [
-                        "decrement",
-                        "get",
-                        "increment",
-                        "set"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Location of the instanced variable\ncurrent - get from the current structure\ngrouped - get from the value returned from the last call in a group",
-                    "enum": [
-                        "current",
-                        "grouped"
-                    ],
-                    "type": "string"
-                },
-                "name": {
-                    "description": "Name of the variable\nShould always be declarfed unless the location is set to grouped",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "accessor"
-                    ],
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
         "Call": {
             "anyOf": [
-                {
-                    "$ref": "#/definitions/StaticCall"
-                },
-                {
-                    "$ref": "#/definitions/InstanceCall"
-                },
-                {
-                    "$ref": "#/definitions/AccessorCall"
-                },
                 {
                     "$ref": "#/definitions/CallGroup"
                 },
@@ -56,13 +13,13 @@
                     "$ref": "#/definitions/LocalDeclaration"
                 },
                 {
-                    "$ref": "#/definitions/LocalAccessorCall"
-                },
-                {
                     "$ref": "#/definitions/Concatenation"
                 },
                 {
                     "$ref": "#/definitions/Literal"
+                },
+                {
+                    "$ref": "#/definitions/GrabCall"
                 }
             ]
         },
@@ -149,42 +106,42 @@
             },
             "type": "object"
         },
-        "InstanceCall": {
-            "description": "Calling a method, variable modifier/accessor, etc on an instance\nthis should always be second in a group call when using it on a variable with the first being an accessor call",
+        "GrabCall": {
+            "description": "For grabbing the property of an object.\nThis is the main call that a lot of things derive from",
             "properties": {
-                "instpath": {
+                "location": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/CallGroup"
+                            "$ref": "#/definitions/GroupedCallLocation"
                         },
                         {
-                            "properties": {
-                                "type": {
-                                    "enum": [
-                                        "this"
-                                    ],
-                                    "type": "string"
-                                }
-                            },
-                            "type": "object"
+                            "$ref": "#/definitions/UndeterminedCallLocation"
                         }
                     ],
-                    "description": "Path to the instance. Usually a group of accessor calls\nIf set to {type: \"this\"} it will grab the method from the current instance"
+                    "description": "If not grouped, location of the prop"
                 },
-                "methodName": {
-                    "description": "Name of the instanced method",
+                "name": {
+                    "description": "Name of the property to grab",
+                    "enum": [
+                        "string"
+                    ],
                     "type": "string"
-                },
-                "methodparams": {
-                    "description": "Method params",
-                    "items": {
-                        "$ref": "#/definitions/Call"
-                    },
-                    "type": "array"
                 },
                 "type": {
                     "enum": [
-                        "instance"
+                        "grab"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "GroupedCallLocation": {
+            "description": "Grouped call location type. This will tell the compiler to grab the property from the value returned from the last call in the group",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "grouped"
                     ],
                     "type": "string"
                 }
@@ -206,37 +163,6 @@
                 },
                 "value": {
                     "description": "The value as a string\nThis will be parsed into an actual value by the compiler",
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "LocalAccessorCall": {
-            "description": "For getting the value of/modifying a variable declared in the current method",
-            "properties": {
-                "accessortype": {
-                    "description": "Type of accessor or modifier",
-                    "enum": [
-                        "decrement",
-                        "get",
-                        "increment",
-                        "set"
-                    ],
-                    "type": "string"
-                },
-                "formalParam": {
-                    "default": false,
-                    "description": "If the variable is a parameter passed to the method",
-                    "type": "boolean"
-                },
-                "name": {
-                    "description": "Name of the variable in the local method context",
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "localaccessor"
-                    ],
                     "type": "string"
                 }
             },
@@ -288,37 +214,6 @@
                         }
                     ],
                     "description": "Type of the variable"
-                }
-            },
-            "type": "object"
-        },
-        "StaticCall": {
-            "description": "Calling a method, variable modifier/accessor, etc on a static structure. e.g. info(message: string) on confused.logger.Logger",
-            "properties": {
-                "methodparams": {
-                    "description": "Method params if static call type is method",
-                    "items": {
-                        "$ref": "#/definitions/Call"
-                    },
-                    "type": "array"
-                },
-                "staticpath": {
-                    "description": "should match the format: path.to.Structure#methodName or path.to.Structure#staticVariable. When doing it to a static variable, must be within a group call with the first being this and the second being an accessor call",
-                    "type": "string"
-                },
-                "statictype": {
-                    "description": "type of static call",
-                    "enum": [
-                        "method",
-                        "variable"
-                    ],
-                    "type": "string"
-                },
-                "type": {
-                    "enum": [
-                        "static"
-                    ],
-                    "type": "string"
                 }
             },
             "type": "object"
@@ -398,28 +293,19 @@
                 "initially": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/StaticCall"
-                        },
-                        {
-                            "$ref": "#/definitions/InstanceCall"
-                        },
-                        {
-                            "$ref": "#/definitions/AccessorCall"
-                        },
-                        {
                             "$ref": "#/definitions/CallGroup"
                         },
                         {
                             "$ref": "#/definitions/LocalDeclaration"
                         },
                         {
-                            "$ref": "#/definitions/LocalAccessorCall"
-                        },
-                        {
                             "$ref": "#/definitions/Concatenation"
                         },
                         {
                             "$ref": "#/definitions/Literal"
+                        },
+                        {
+                            "$ref": "#/definitions/GrabCall"
                         },
                         {
                             "enum": [
@@ -654,28 +540,19 @@
                 "initially": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/StaticCall"
-                        },
-                        {
-                            "$ref": "#/definitions/InstanceCall"
-                        },
-                        {
-                            "$ref": "#/definitions/AccessorCall"
-                        },
-                        {
                             "$ref": "#/definitions/CallGroup"
                         },
                         {
                             "$ref": "#/definitions/LocalDeclaration"
                         },
                         {
-                            "$ref": "#/definitions/LocalAccessorCall"
-                        },
-                        {
                             "$ref": "#/definitions/Concatenation"
                         },
                         {
                             "$ref": "#/definitions/Literal"
+                        },
+                        {
+                            "$ref": "#/definitions/GrabCall"
                         },
                         {
                             "enum": [
@@ -749,6 +626,22 @@
                 "string"
             ],
             "type": "string"
+        },
+        "UndeterminedCallLocation": {
+            "description": "Use this if you are not sure where the call is coming from. The compiler will determine where this is from based on the name and context.\nThis is what the treeifier uses most of the time\nDetermined by the following order of checks:\n - local variable name\n - formal param name\n - class variable name\n - static sub-structure\n - imports",
+            "properties": {
+                "name": {
+                    "description": "Name of the value to find",
+                    "type": "string"
+                },
+                "type": {
+                    "enum": [
+                        "undetermined"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
         }
     },
     "type": "object"
