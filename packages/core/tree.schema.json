@@ -4,6 +4,50 @@
         "$ref": "#/definitions/TreeClass"
     },
     "definitions": {
+        "ActualParam": {
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ]
+                },
+                "value": {
+                    "$ref": "#/definitions/Call"
+                }
+            },
+            "type": "object"
+        },
         "Call": {
             "anyOf": [
                 {
@@ -20,6 +64,9 @@
                 },
                 {
                     "$ref": "#/definitions/GrabCall"
+                },
+                {
+                    "$ref": "#/definitions/RunCall"
                 }
             ]
         },
@@ -59,6 +106,18 @@
                 "type": {
                     "enum": [
                         "concat"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "CurrentCallLocation": {
+            "description": "Use this to grab the property from the current class instance (not static)",
+            "properties": {
+                "type": {
+                    "enum": [
+                        "current"
                     ],
                     "type": "string"
                 }
@@ -106,6 +165,52 @@
             },
             "type": "object"
         },
+        "FormalParamCallLocation": {
+            "description": "Use this to get the value of a variable declared as a formal parameter in the current method\nUses the name passed from the root grab call definition",
+            "properties": {
+                "expectedType": {
+                    "anyOf": [
+                        {
+                            "properties": {
+                                "isStructure": {
+                                    "description": "Set to true if the type represents a structure e.g. instance of a class",
+                                    "enum": [
+                                        true
+                                    ],
+                                    "type": "boolean"
+                                },
+                                "structurePath": {
+                                    "description": "Path to the constructor. If its an instance of the class, this should just be the path e.g. confused.logger.Logger",
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "enum": [
+                                "boolean",
+                                "byte",
+                                "double",
+                                "float",
+                                "int",
+                                "long",
+                                "short",
+                                "string"
+                            ],
+                            "type": "string"
+                        }
+                    ],
+                    "description": "Type to expect.\nThis is optional and only to prevent accidental mistyping"
+                },
+                "type": {
+                    "enum": [
+                        "formal"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "GrabCall": {
             "description": "For grabbing the property of an object.\nThis is the main call that a lot of things derive from",
             "properties": {
@@ -116,15 +221,18 @@
                         },
                         {
                             "$ref": "#/definitions/UndeterminedCallLocation"
+                        },
+                        {
+                            "$ref": "#/definitions/CurrentCallLocation"
+                        },
+                        {
+                            "$ref": "#/definitions/FormalParamCallLocation"
                         }
                     ],
                     "description": "If not grouped, location of the prop"
                 },
                 "name": {
                     "description": "Name of the property to grab",
-                    "enum": [
-                        "string"
-                    ],
                     "type": "string"
                 },
                 "type": {
@@ -218,6 +326,25 @@
             },
             "type": "object"
         },
+        "RunCall": {
+            "description": "This is for running the property value returned from the last call in the group.\nShould only be used after a grab call that targets a runnable method",
+            "properties": {
+                "methodParams": {
+                    "description": "The parameters to pass",
+                    "items": {
+                        "$ref": "#/definitions/ActualParam"
+                    },
+                    "type": "array"
+                },
+                "type": {
+                    "enum": [
+                        "run"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "StaticTreeClassMethod": {
             "properties": {
                 "accessibility": {
@@ -306,6 +433,9 @@
                         },
                         {
                             "$ref": "#/definitions/GrabCall"
+                        },
+                        {
+                            "$ref": "#/definitions/RunCall"
                         },
                         {
                             "enum": [
@@ -553,6 +683,9 @@
                         },
                         {
                             "$ref": "#/definitions/GrabCall"
+                        },
+                        {
+                            "$ref": "#/definitions/RunCall"
                         },
                         {
                             "enum": [

@@ -13,8 +13,6 @@ function id(x) { return x[0]; }
         return rules
     }
 
-    function all(d) { return [...d] }
-
     const l =
         [
         ".",
@@ -29,14 +27,12 @@ function id(x) { return x[0]; }
             value: v => v.slice(1, -1)
         },
         word: {
-            match: /[A-z0-9]+/,
+            match: /[A-Za-z0-9]+/,
             lineBreaks: true,
             next: "main"
         },
         ...literals(l)
     }
-
-    const initial = (d) => d[0];
 
     function append(rs) {
         Object.assign(rules, rs);

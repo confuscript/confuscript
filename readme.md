@@ -1,3 +1,5 @@
+[![DeepScan grade](https://deepscan.io/api/teams/12988/projects/16026/branches/332529/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12988&pid=16026&bid=332529)
+
 # Confuscript
 
 ## Features (and if they have been implemented)
