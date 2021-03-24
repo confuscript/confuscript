@@ -4,6 +4,7 @@ packages/lang/lang/o/
 test/debug/
 dist/
 types/
+typings/
 
 
 # Created by https://www.toptal.com/developers/gitignore/api/yarn,node,webstorm,jetbrains,vscode

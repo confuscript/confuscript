@@ -3,7 +3,7 @@
   "description": "A package containing common structures",
   "version": "0.0.1",
   "main": "dist/index.js",
-  "types": "types/index.d.ts",
+  "types": "typings/index.d.ts",
   "license": "GPL-3.0",
   "devDependencies": {
     "@types/nearley": "^2.11.1",

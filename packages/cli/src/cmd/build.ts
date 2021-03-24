@@ -3,6 +3,7 @@ import { resolve } from "path";
 import { ProjectConfig } from "@confuscript/core";
 import { readFileSync } from "fs";
 import { Grammar } from "nearley";
+import { GlobalTree } from "@confuscript/trees";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const grammar = require("@confuscript/lang");
@@ -17,6 +18,7 @@ export default function build(options: any) {
         config,
         resolve(configpath, "../"),
         Grammar.fromCompiled(grammar),
+        [GlobalTree],
     );
 
     tree.start();

@@ -11,7 +11,7 @@
 
     const l =
         [
-        ".",
+        ".", "{", "}",
         "import"
         ]
 
@@ -39,10 +39,12 @@
 
 @include "./util/comment.ne"
 @include "./structures/imports.ne"
+@include "./structures/class.ne"
 
 root -> main:+ {%d => d[0]%}
 
 main -> import {%id%}
+    | class {%id%}
     | comment {%id%}
     | %ws {%d => d[0].value%}
 

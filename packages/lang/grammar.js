@@ -15,7 +15,7 @@ function id(x) { return x[0]; }
 
     const l =
         [
-        ".",
+        ".", "{", "}",
         "import"
         ]
 
@@ -62,6 +62,16 @@ function id(x) { return x[0]; }
     })
 
 
+    append({
+        ws: {
+            match: /\s+/,
+            lineBreaks: true,
+            next: "main"
+        },
+        ...literals(["class"])
+    })
+
+
     const lexer = moo.states({
         main: {
             ...rules
@@ -84,10 +94,19 @@ var grammar = {
     {"name": "moreimport$ebnf$2", "symbols": ["_"], "postprocess": id},
     {"name": "moreimport$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "moreimport", "symbols": ["moreimport$ebnf$1", {"literal":"."}, "moreimport$ebnf$2", (lexer.has("word") ? {type: "word"} : word)], "postprocess": d => d[3]},
+    {"name": "class$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "class$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "class$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "class$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "class$ebnf$3", "symbols": []},
+    {"name": "class$ebnf$3", "symbols": ["class$ebnf$3", "classbody"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
+    {"name": "class", "symbols": [{"literal":"class"}, "class$ebnf$1", (lexer.has("word") ? {type: "word"} : word), "class$ebnf$2", {"literal":"{"}, "class$ebnf$3", {"literal":"}"}], "postprocess": d => ({ type: "class", name: d[2].value, content: d[5] })},
+    {"name": "classbody", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": d => d[0].value},
     {"name": "root$ebnf$1", "symbols": ["main"]},
     {"name": "root$ebnf$1", "symbols": ["root$ebnf$1", "main"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "root", "symbols": ["root$ebnf$1"], "postprocess": d => d[0]},
     {"name": "main", "symbols": ["import"], "postprocess": id},
+    {"name": "main", "symbols": ["class"], "postprocess": id},
     {"name": "main", "symbols": ["comment"], "postprocess": id},
     {"name": "main", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": d => d[0].value}
 ]

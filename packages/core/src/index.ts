@@ -1,24 +1,42 @@
 import { ProjectConfig } from "./common/config";
 import { makeParentDirs } from "./common/dirs";
-import Tree from "./common/tree";
+import Tree, {
+    CompileType,
+    StaticTreeClassMethod,
+    StaticTreeClassVariable,
+    TreeClass,
+    TreeClassConstructor,
+    TreeClassMethod,
+    TreeClassVariable,
+} from "./common/tree";
 import {
+    ActualParam,
+    AllTypes,
     Call,
-    LocalDeclaration,
-    Literal,
-    Concatenation,
     CallGroup,
     CallLocation,
+    Concatenation,
+    FormalParam,
     GrabCall,
     GroupedCallLocation,
-    UndeterminedCallLocation,
-    ActualParam,
-    FormalParam,
+    Literal,
+    LocalDeclaration,
     RunnableContent,
     Types,
-    AllTypes,
+    UndeterminedCallLocation,
 } from "./common/types";
 
-export { Tree, RunnableContent };
+export {
+    Tree,
+    RunnableContent,
+    TreeClass,
+    CompileType,
+    TreeClassVariable,
+    StaticTreeClassVariable,
+    TreeClassConstructor,
+    TreeClassMethod,
+    StaticTreeClassMethod,
+};
 export { AllTypes, Types };
 export { ProjectConfig };
 export { makeParentDirs };

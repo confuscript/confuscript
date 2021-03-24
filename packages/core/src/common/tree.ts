@@ -1,4 +1,5 @@
 import { AllTypes, Call, FormalParam, RunnableContent } from "./types";
+import { ParsedImport } from "@confuscript/trees";
 
 export default interface Tree {
     /**
@@ -21,6 +22,13 @@ export type TreePartAccessorType =
     | "protected"
     | "private";
 
+/**
+ * Types of compilation<br/>
+ * include - Compile the whole class into the final output<br/>
+ * substitute - Don't compile the class into the final output but substitute calls to properties from the class with the code it would run
+ */
+export type CompileType = "include" | "substitute";
+
 export interface TreeClass {
     /**
      * Class type of tree element
@@ -42,6 +50,16 @@ export interface TreeClass {
      * Any properties to link with the special type
      */
     specialProps?: (string | number)[];
+    /**
+     * How to include this class in the final output
+     * See {@link CompileType} for an explanation
+     * @default "include"
+     */
+    compileType?: CompileType;
+    /**
+     * This is only used by the treeifier to pass import data to the compiler
+     */
+    imports?: ParsedImport[];
     /**
      * Class content
      */

@@ -6,6 +6,7 @@ export const GlobalTree: Tree = {
         constructable: false,
         special: "global",
         specialProps: ["INSTANCE"],
+        compileType: "substitute",
         content: {
             name: "Program",
             vars: [],

@@ -3,6 +3,7 @@ import chalk from "chalk";
 import { lstatSync, readdirSync, readFileSync, writeFileSync } from "fs";
 import { Grammar, Parser } from "nearley";
 import { resolve, sep } from "path";
+import { processParsedFile } from "./process/file";
 
 export default class Treeify {
     tree: Tree = {};
@@ -10,10 +11,20 @@ export default class Treeify {
     rootdir: string;
     grammar: Grammar;
 
-    constructor(config: ProjectConfig, rootdir: string, grammar: Grammar) {
+    constructor(
+        config: ProjectConfig,
+        rootdir: string,
+        grammar: Grammar,
+        initialTrees?: Tree[],
+    ) {
         this.config = config;
         this.rootdir = rootdir;
         this.grammar = grammar;
+        if (initialTrees) {
+            for (const t of initialTrees) {
+                Object.assign(this.tree, t);
+            }
+        }
     }
 
     /**
@@ -67,5 +78,7 @@ export default class Treeify {
             resolve(this.rootdir, "debug", path + ".json"),
             JSON.stringify(parsed, null, 2),
         );
+        const pkg = path.replace(/\.co$/, "").replace(/(\/|\\|\\\\)/g, ".");
+        this.tree[pkg] = processParsedFile(parsed);
     }
 }
