@@ -14,5 +14,5 @@
     "chalk": "^4.1.0",
     "nearley": "^2.20.1"
   },
-  "types": "types/index.d.ts"
+  "types": "dist/index.d.ts"
 }

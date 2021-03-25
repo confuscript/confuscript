@@ -8,7 +8,9 @@ export function processParsedFile(p: Parsed): TreeClass {
         special: "none",
         specialProps: [],
         compileType: "include",
-        imports: [],
+        state: {
+            imports: [],
+        },
         content: {
             name: "",
             staticVars: [],
@@ -22,7 +24,7 @@ export function processParsedFile(p: Parsed): TreeClass {
     for (const part of p) {
         if (typeof part !== "string") {
             if (part.type === "import") {
-                cls.imports?.push(part);
+                cls.state?.imports?.push(part);
             } else if (part.type === "class") {
                 cls.content.name = part.name;
             }

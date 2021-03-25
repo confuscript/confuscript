@@ -57,9 +57,14 @@ export interface TreeClass {
      */
     compileType?: CompileType;
     /**
-     * This is only used by the treeifier to pass import data to the compiler
+     * State information used by the treeifier and parser to save information so any calculation or search is done once
      */
-    imports?: ParsedImport[];
+    state?: {
+        /**
+         * This is only used by the treeifier to pass import data to the compiler
+         */
+        imports: ParsedImport[];
+    };
     /**
      * Class content
      */
