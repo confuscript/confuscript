@@ -78,7 +78,7 @@ export default class Treeify {
             resolve(this.rootdir, "debug", path + ".json"),
             JSON.stringify(parsed, null, 2),
         );
-        const pkg = path.replace(/\.co$/, "").replace(/(\/|\\|\\\\)/g, ".");
+        const pkg = path.replace(/\.co$/, "").replace(/(\/|\\\\|\\)/g, ".");
         this.tree[pkg] = processParsedFile(parsed);
     }
 }
