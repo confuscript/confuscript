@@ -1,3 +1,9 @@
+@{%
+    append({
+        ...literals(["import"])
+    })
+%}
+
 @lexer lexer
 
 @include "../util/spaces.ne"
