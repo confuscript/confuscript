@@ -1,18 +1,18 @@
 @{%
     append({
-        stringmark: {
-            match: /("|')/,
+        stringvalue: {
+            match: /["'][A-Za-z0-9\s\t\S]+["']/,
             lineBreaks: true,
             next: "main"
-        }
+        },
         ...literals(["string"])
     })
 %}
 
 @lexer lexer
 
-valuetype -> "string"
-    | "int"
-    | "boolean"
+valuetype -> "string" {%id%}
+    | "int" {%id%}
+    | "boolean" {%id%}
 
-value -> %stringmark %sentence %stringmark
+value -> %stringvalue {%id%}

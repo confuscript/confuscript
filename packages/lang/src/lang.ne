@@ -11,7 +11,8 @@
 
     const l =
         [
-        ".", "{", "}"
+        ".", "{", "}",
+        ";"
         ]
 
     const rules = {
@@ -20,15 +21,10 @@
             lineBreaks: true,
             next: "main"
         },
-        sentence:{
-            match: /[A-Za-z0-9\s\t\S]/,
-            lineBreaks: true,
-            next: "main"
-        },
         ...literals(l)
     }
 
-    function append(rs) {
+    function append(rs, loc = "main") {
         Object.assign(rules, rs);
     }
 %}

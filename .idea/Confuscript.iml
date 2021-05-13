@@ -8,7 +8,6 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/cli/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/trees/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/test/debug" />
       <excludeFolder url="file://$MODULE_DIR$/packages/parserbuilder/dist" />
       <excludeFolder url="file://$MODULE_DIR$/.yarn/cache" />
       <excludeFolder url="file://$MODULE_DIR$/packages/cli/tmp" />

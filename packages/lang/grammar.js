@@ -15,7 +15,8 @@ function id(x) { return x[0]; }
 
     const l =
         [
-        ".", "{", "}"
+        ".", "{", "}",
+        ";"
         ]
 
     const rules = {
@@ -24,15 +25,10 @@ function id(x) { return x[0]; }
             lineBreaks: true,
             next: "main"
         },
-        sentence:{
-            match: /[A-Za-z0-9\s\t\S]/,
-            lineBreaks: true,
-            next: "main"
-        },
         ...literals(l)
     }
 
-    function append(rs) {
+    function append(rs, loc = "main") {
         Object.assign(rules, rs);
     }
 
@@ -81,11 +77,11 @@ function id(x) { return x[0]; }
 
 
     append({
-        stringmark: {
-            match: /("|')/,
+        stringvalue: {
+            match: /["'][A-Za-z0-9\s\t\S]+["']/,
             lineBreaks: true,
             next: "main"
-        }
+        },
         ...literals(["string"])
     })
 
@@ -112,21 +108,23 @@ var grammar = {
     {"name": "moreimport$ebnf$2", "symbols": ["_"], "postprocess": id},
     {"name": "moreimport$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "moreimport", "symbols": ["moreimport$ebnf$1", {"literal":"."}, "moreimport$ebnf$2", (lexer.has("word") ? {type: "word"} : word)], "postprocess": d => d[3]},
-    {"name": "valuetype", "symbols": [{"literal":"string"}]},
-    {"name": "valuetype", "symbols": [{"literal":"int"}]},
-    {"name": "valuetype", "symbols": [{"literal":"boolean"}]},
-    {"name": "value", "symbols": [(lexer.has("stringmark") ? {type: "stringmark"} : stringmark), (lexer.has("sentence") ? {type: "sentence"} : sentence), (lexer.has("stringmark") ? {type: "stringmark"} : stringmark)]},
-    {"name": "classvariable", "symbols": [(lexer.has("word") ? {type: "word"} : word), "variabletype", "variableassign"], "postprocess": (d) => ({type: "classvariable", type: d[1], value: d[3]})},
+    {"name": "valuetype", "symbols": [{"literal":"string"}], "postprocess": id},
+    {"name": "valuetype", "symbols": [{"literal":"int"}], "postprocess": id},
+    {"name": "valuetype", "symbols": [{"literal":"boolean"}], "postprocess": id},
+    {"name": "value", "symbols": [(lexer.has("stringvalue") ? {type: "stringvalue"} : stringvalue)], "postprocess": id},
+    {"name": "classvariable$ebnf$1", "symbols": ["variableassign"], "postprocess": id},
+    {"name": "classvariable$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "classvariable", "symbols": [(lexer.has("word") ? {type: "word"} : word), "variabletype", "classvariable$ebnf$1", {"literal":";"}], "postprocess": (d) => ({type: "classvariable", value: {type: d[1], value: d[2]}})},
     {"name": "variabletype$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "variabletype$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "variabletype$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "variabletype$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "variabletype", "symbols": ["variabletype$ebnf$1", {"literal":":"}, "variabletype$ebnf$2", "valuetype"], "postprocess": (d) => d[3]},
+    {"name": "variabletype", "symbols": ["variabletype$ebnf$1", {"literal":":"}, "variabletype$ebnf$2", "valuetype"], "postprocess": (d) => d[3].value},
     {"name": "variableassign$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "variableassign$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "variableassign$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "variableassign$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
-    {"name": "variableassign", "symbols": ["variableassign$ebnf$1", {"literal":"="}, "variableassign$ebnf$2", "value"], "postprocess": (d) => d[3]},
+    {"name": "variableassign", "symbols": ["variableassign$ebnf$1", {"literal":"="}, "variableassign$ebnf$2", "value"], "postprocess": (d) => d[3].value},
     {"name": "class$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "class$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "class$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
