@@ -5,13 +5,15 @@
       <excludeFolder url="file://$MODULE_DIR$/temp" />
       <excludeFolder url="file://$MODULE_DIR$/.tmp" />
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
-      <excludeFolder url="file://$MODULE_DIR$/scripts/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/core/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/trees/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/trees/types" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/core/types" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/cli/dist" />
-      <excludeFolder url="file://$MODULE_DIR$/packages/core/typings" />
+      <excludeFolder url="file://$MODULE_DIR$/test/debug" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/parserbuilder/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/.yarn/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/cli/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/core/tmp" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/trees/tmp" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

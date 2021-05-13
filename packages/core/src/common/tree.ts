@@ -1,5 +1,5 @@
 import { AllTypes, Call, FormalParam, RunnableContent } from "./types";
-import { ParsedImport } from "@confuscript/trees";
+import {ParsedImport} from "@confuscript/trees";
 
 export default interface Tree {
     /**

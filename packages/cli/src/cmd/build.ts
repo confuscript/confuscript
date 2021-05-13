@@ -9,6 +9,7 @@ import { GlobalTree } from "@confuscript/trees";
 const grammar = require("@confuscript/lang");
 
 export default function build(options: any) {
+    process.stdout.clearLine(0);
     const configpath = resolve(
         process.cwd(),
         options.config ? options.config : ".confuscriptrc",

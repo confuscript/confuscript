@@ -9,6 +9,6 @@
     "nearley": "^2.20.1"
   },
   "scripts": {
-    "grammar": "npx nearleyc src/lang.ne -o grammar.js"
+    "grammar": "nearleyc src/lang.ne -o grammar.js"
   }
 }

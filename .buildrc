@@ -7,30 +7,11 @@
   "packagePrefix": "@confuscript/",
   "commands": [
     {
-      "id": "scripts",
-      "runInEnvironments": [],
-      "type": "typescript",
-      "package": "scripts",
-      "dontUsePackagePrefix": true
-    },
-    {
       "id": "grammar",
       "type": "custom",
       "package": "lang",
-      "command": "nearleyc src/lang.ne -o grammar.js",
-      "runInEnvironments": [
-        "prod"
-      ]
-    },
-    {
-      "id": "build-schema",
-      "type": "custom",
-      "package": "scripts",
-      "command": "schema",
-      "runInEnvironments": [
-        "prod"
-      ],
-      "dontUsePackagePrefix": true
+      "command": "grammar",
+      "runInEnvironments": []
     },
     {
       "id": "project-schema",

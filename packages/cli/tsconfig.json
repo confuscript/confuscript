@@ -22,10 +22,11 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "strict": true,
-    "alwaysStrict": true,
-    "pretty": true
+    "declaration": true,
+    "incremental": true,
+    "composite": true,
+    "tsBuildInfoFile": "tmp/.tsbuildinfo"
   },
-  "exclude": ["node_modules"],
+  "exclude": ["node_modules", "dist"],
   "include": ["./src/**/*.tsx", "./src/**/*.ts"]
 }
