@@ -15,19 +15,17 @@ function id(x) { return x[0]; }
 
     const l =
         [
-        ".", "{", "}",
-        "import"
+        ".", "{", "}"
         ]
 
     const rules = {
-        string: {
-            match: /\"(?:(?![\"\n])[\w\W]+)\"/,
-            lineBreaks: true,
-            next: "main",
-            value: v => v.slice(1, -1)
-        },
         word: {
             match: /[A-Za-z0-9]+/,
+            lineBreaks: true,
+            next: "main"
+        },
+        sentence:{
+            match: /[A-Za-z0-9\s\t\S]/,
             lineBreaks: true,
             next: "main"
         },
@@ -63,12 +61,32 @@ function id(x) { return x[0]; }
 
 
     append({
+        ...literals(["import"])
+    })
+
+
+    append({
         ws: {
             match: /\s+/,
             lineBreaks: true,
             next: "main"
         },
         ...literals(["class"])
+    })
+
+
+    append({
+        ...literals([":", "="])
+    })
+
+
+    append({
+        stringmark: {
+            match: /("|')/,
+            lineBreaks: true,
+            next: "main"
+        }
+        ...literals(["string"])
     })
 
 
@@ -94,6 +112,21 @@ var grammar = {
     {"name": "moreimport$ebnf$2", "symbols": ["_"], "postprocess": id},
     {"name": "moreimport$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "moreimport", "symbols": ["moreimport$ebnf$1", {"literal":"."}, "moreimport$ebnf$2", (lexer.has("word") ? {type: "word"} : word)], "postprocess": d => d[3]},
+    {"name": "valuetype", "symbols": [{"literal":"string"}]},
+    {"name": "valuetype", "symbols": [{"literal":"int"}]},
+    {"name": "valuetype", "symbols": [{"literal":"boolean"}]},
+    {"name": "value", "symbols": [(lexer.has("stringmark") ? {type: "stringmark"} : stringmark), (lexer.has("sentence") ? {type: "sentence"} : sentence), (lexer.has("stringmark") ? {type: "stringmark"} : stringmark)]},
+    {"name": "classvariable", "symbols": [(lexer.has("word") ? {type: "word"} : word), "variabletype", "variableassign"], "postprocess": (d) => ({type: "classvariable", type: d[1], value: d[3]})},
+    {"name": "variabletype$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "variabletype$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "variabletype$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "variabletype$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "variabletype", "symbols": ["variabletype$ebnf$1", {"literal":":"}, "variabletype$ebnf$2", "valuetype"], "postprocess": (d) => d[3]},
+    {"name": "variableassign$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "variableassign$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "variableassign$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
+    {"name": "variableassign$ebnf$2", "symbols": [], "postprocess": function(d) {return null;}},
+    {"name": "variableassign", "symbols": ["variableassign$ebnf$1", {"literal":"="}, "variableassign$ebnf$2", "value"], "postprocess": (d) => d[3]},
     {"name": "class$ebnf$1", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
     {"name": "class$ebnf$1", "symbols": [], "postprocess": function(d) {return null;}},
     {"name": "class$ebnf$2", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": id},
@@ -102,6 +135,7 @@ var grammar = {
     {"name": "class$ebnf$3", "symbols": ["class$ebnf$3", "classbody"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "class", "symbols": [{"literal":"class"}, "class$ebnf$1", (lexer.has("word") ? {type: "word"} : word), "class$ebnf$2", {"literal":"{"}, "class$ebnf$3", {"literal":"}"}], "postprocess": d => ({ type: "class", name: d[2].value, content: d[5] })},
     {"name": "classbody", "symbols": [(lexer.has("ws") ? {type: "ws"} : ws)], "postprocess": d => d[0].value},
+    {"name": "classbody", "symbols": ["classvariable"], "postprocess": id},
     {"name": "root$ebnf$1", "symbols": ["main"]},
     {"name": "root$ebnf$1", "symbols": ["root$ebnf$1", "main"], "postprocess": function arrpush(d) {return d[0].concat([d[1]]);}},
     {"name": "root", "symbols": ["root$ebnf$1"], "postprocess": d => d[0]},

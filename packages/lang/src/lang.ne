@@ -11,19 +11,17 @@
 
     const l =
         [
-        ".", "{", "}",
-        "import"
+        ".", "{", "}"
         ]
 
     const rules = {
-        string: {
-            match: /\"(?:(?![\"\n])[\w\W]+)\"/,
-            lineBreaks: true,
-            next: "main",
-            value: v => v.slice(1, -1)
-        },
         word: {
             match: /[A-Za-z0-9]+/,
+            lineBreaks: true,
+            next: "main"
+        },
+        sentence:{
+            match: /[A-Za-z0-9\s\t\S]/,
             lineBreaks: true,
             next: "main"
         },
