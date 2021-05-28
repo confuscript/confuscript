@@ -6,7 +6,7 @@
   "license": "LGPL-3.0",
   "private": true,
   "devDependencies": {
-    "@floffah/build": "^0.4.0",
+    "@floffah/build": "^1.0.0",
     "@octokit/core": "^3.4.0",
     "@typescript-eslint/eslint-plugin": "^4.23.0",
     "@typescript-eslint/parser": "^4.23.0",
