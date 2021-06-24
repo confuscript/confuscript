@@ -8,7 +8,7 @@
         "typings"
     ],
     "engines": {
-        "node": ">=12"
+        "node": ">=14"
     },
     "author": "floffah <therealfloffah@gmail.com>",
     "homepage": "https://github.com/confuscript/confuscript",
