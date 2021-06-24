@@ -1,18 +1,27 @@
 import { Parser } from "@confuscript/parser";
 import JoyCon from "joycon";
-import { loadConfig } from "@confuscript/types";
+import { Config, loadConfig } from "@confuscript/types";
+import { existsSync } from "fs";
+import { resolve } from "path";
+import { writeTargetDebugs } from "@confuscript/types";
 
 export interface BuildCommandOpts {
     debug?: boolean;
 }
 
-export default async function buildCommand(_opts: BuildCommandOpts) {
+export default async function buildCommand(opts: BuildCommandOpts) {
     const joycon = new JoyCon();
-    const config = await loadConfig(joycon);
+    const config = (await loadConfig(joycon)) as Config;
+    console.log(config.name);
+    const src = resolve(process.cwd(), "src");
 
-    console.log(config);
+    if (!existsSync(src)) throw "No src folder";
 
     const parser = new Parser();
 
-    parser.export();
+    await parser.run(null, src);
+
+    const exported = await parser.export();
+
+    if (opts.debug) writeTargetDebugs(exported);
 }

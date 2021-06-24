@@ -1,0 +1,20 @@
+[
+    [
+        {"type": "import", "path": ["test", "set"]},
+        "\r\n",
+        "// fdsf",
+        {
+            "type": "class",
+            "name": "Main",
+            "content": [
+                "\r\n    ",
+                {
+                    "type": "classvariable",
+                    "value": {"type": "string", "value": null}
+                },
+                "\r\n"
+            ]
+        },
+        "\r\n"
+    ]
+]

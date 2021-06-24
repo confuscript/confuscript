@@ -51,6 +51,7 @@ __metadata:
     commander: ^7.2.0
     enquirer: ^2.3.6
     joycon: ^3.0.1
+    source-map-support: ^0.5.19
     tsup: ^4.11.2
     typescript: ^4.3.4
   bin:
@@ -72,6 +73,7 @@ __metadata:
   resolution: "@confuscript/parser@workspace:packages/parser"
   dependencies:
     "@confuscript/grammar": 0.0.0
+    "@confuscript/types": 0.0.0
     "@types/nearley": ^2.11.1
     "@types/node": ^15.12.4
     moo: ^0.5.1
@@ -7048,7 +7050,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map@npm:^0.6.1":
+"source-map-support@npm:^0.5.19":
+  version: 0.5.19
+  resolution: "source-map-support@npm:0.5.19"
+  dependencies:
+    buffer-from: ^1.0.0
+    source-map: ^0.6.0
+  checksum: 59d4efaae97755155b078413ecba63517e3ef054cc7ab767bbd30e6f3054be2ae8e8f5cce7eef53b7eb93e98fe27a58dd8f5e7abfb13144ba420ddaf5267bbb2
+  languageName: node
+  linkType: hard
+
+"source-map@npm:^0.6.0, source-map@npm:^0.6.1":
   version: 0.6.1
   resolution: "source-map@npm:0.6.1"
   checksum: 8647829a0611724114022be455ca1c8a2c8ae61df81c5b3667d9b398207226a1e21174fb7bbf0b4dbeb27ac358222afb5a14f1c74a62a62b8883b012e5eb1270

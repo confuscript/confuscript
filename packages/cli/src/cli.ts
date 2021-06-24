@@ -1,5 +1,6 @@
 #!/bin/env node
 
+import "source-map-support/register";
 import { program } from "commander";
 import buildCommand from "./command/build";
 

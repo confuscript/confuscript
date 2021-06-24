@@ -39,6 +39,7 @@
     },
     "dependencies": {
         "@confuscript/grammar": "0.0.0",
+        "@confuscript/types": "0.0.0",
         "moo": "^0.5.1",
         "nearley": "^2.20.1"
     }

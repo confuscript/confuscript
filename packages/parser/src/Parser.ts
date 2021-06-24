@@ -1,6 +1,7 @@
 import { Grammar, Parser as NearleyParser } from "nearley";
 import { existsSync, lstatSync, readdirSync, readFileSync } from "fs";
 import { resolve, sep } from "path";
+import { AST } from "@confuscript/types";
 
 const cogrammar = require("@confuscript/grammar");
 
@@ -8,7 +9,7 @@ export default class Parser {
     grammar: Grammar;
     parser: NearleyParser;
 
-    tree: { [path: string]: any[] } = {};
+    tree: AST = {};
 
     constructor(grammar?: Grammar) {
         this.grammar = grammar ? grammar : Grammar.fromCompiled(cogrammar);
