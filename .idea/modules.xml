@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/confuscript-rewrite.iml" filepath="$PROJECT_DIR$/.idea/confuscript-rewrite.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/confuscript-old.iml" filepath="$PROJECT_DIR$/.idea/confuscript-old.iml" />
     </modules>
   </component>
 </project>

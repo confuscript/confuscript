@@ -1,0 +1,50 @@
+{
+    "enableTerminal": true,
+    "allowedTargets": [
+        "win",
+        "linux"
+    ],
+    "packagePrefix": "@confuscript/",
+    "commands": [
+        {
+            "id": "grammar",
+            "type": "custom",
+            "package": "lang",
+            "command": "prepare",
+            "runInEnvironments": []
+        },
+        {
+            "id": "types",
+            "type": "custom",
+            "package": "types",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
+        },
+        {
+            "id": "parser",
+            "type": "custom",
+            "package": "parser",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
+        },
+        {
+            "id": "cli",
+            "type": "custom",
+            "package": "cli",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
+        }
+    ]
+}
