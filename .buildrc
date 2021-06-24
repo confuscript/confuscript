@@ -9,7 +9,7 @@
         {
             "id": "grammar",
             "type": "custom",
-            "package": "lang",
+            "package": "grammar",
             "command": "prepare",
             "runInEnvironments": [ "prod" ]
         },
