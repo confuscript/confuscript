@@ -25,7 +25,7 @@
     "url": "git+https://github.com/confuscript/confuscript.git"
   },
   "scripts": {
-    "prepare": "nearleyc src/lang.ne -o dist/grammar.js"
+    "prepare": "mkdir -p dist && nearleyc src/lang.ne -o dist/grammar.js"
   },
   "bugs": {
     "url": "https://github.com/confuscript/confuscript/issues"
