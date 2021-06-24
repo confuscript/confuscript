@@ -1,3 +1,5 @@
+[![DeepScan grade](https://deepscan.io/api/teams/12988/projects/16026/branches/412174/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=12988&pid=16026&bid=412174)
+
 # Confuscript
 
 Confuscript is a programming language written in TypeScript. It is unique because it offers the following features:
