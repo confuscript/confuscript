@@ -1,8 +1,7 @@
 import { Options } from "tsup";
+import { TsupCommon } from "../../tsup.common";
 
 export const tsup: Options = {
-    sourcemap: true,
-    clean: true,
+    ...TsupCommon,
     entryPoints: ["src/index.ts"],
-    dts: true,
 };

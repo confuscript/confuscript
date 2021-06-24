@@ -1,9 +1,8 @@
 import { Options } from "tsup";
+import { TsupCommon } from "../../tsup.common";
 
 export const tsup: Options = {
+    ...TsupCommon,
     splitting: true,
-    sourcemap: true,
-    clean: true,
     entryPoints: ["src/index.ts", "src/cli.ts"],
-    dts: true,
 };
