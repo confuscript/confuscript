@@ -45,6 +45,7 @@
         "@confuscript/compiler": "0.0.0",
         "@confuscript/parser": "0.0.0",
         "@confuscript/types": "0.0.0",
+        "chalk": "^4.1.1",
         "commander": "^7.2.0",
         "enquirer": "^2.3.6",
         "joycon": "^3.0.1",
