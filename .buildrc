@@ -14,6 +14,17 @@
             "runInEnvironments": [ "prod" ]
         },
         {
+            "id": "ast",
+            "type": "custom",
+            "package": "ast",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
+        },
+        {
             "id": "types",
             "type": "custom",
             "package": "types",
@@ -28,6 +39,17 @@
             "id": "parser",
             "type": "custom",
             "package": "parser",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
+        },
+        {
+            "id": "compiler",
+            "type": "custom",
+            "package": "compiler",
             "command": "tsup",
             "devcommand": "tsup --watch",
             "runInEnvironments": [

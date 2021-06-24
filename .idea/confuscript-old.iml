@@ -11,6 +11,8 @@
       <excludeFolder url="file://$MODULE_DIR$/.yarn/cache" />
       <excludeFolder url="file://$MODULE_DIR$/.yarn/unplugged" />
       <excludeFolder url="file://$MODULE_DIR$/packages/types/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/compiler/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/ast/dist" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

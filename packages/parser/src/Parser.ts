@@ -44,8 +44,12 @@ export default class Parser {
 
         this.parser.feed(content);
 
-        this.tree[path.replace(/[\\/]/g, ".").replace(/.co$/, "")] =
-            this.parser.finish();
+        const parsed = this.parser.finish();
+
+        if (parsed.length > 1)
+            throw new Error("Parser returned multiple root File nodes");
+
+        this.tree[path.replace(/[\\/]/g, ".").replace(/.co$/, "")] = parsed[0];
     }
 
     async export() {

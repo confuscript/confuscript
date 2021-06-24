@@ -35,7 +35,7 @@
 @include "./structures/imports.ne"
 @include "./structures/class.ne"
 
-root -> main:+ {%d => d[0]%}
+root -> main:+ {%d => ({ type: "File", body: d[0] }) %}
 
 main -> import {%id%}
     | class {%id%}

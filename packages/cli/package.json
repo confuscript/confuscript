@@ -42,6 +42,7 @@
         "typescript": "^4.3.4"
     },
     "dependencies": {
+        "@confuscript/compiler": "0.0.0",
         "@confuscript/parser": "0.0.0",
         "@confuscript/types": "0.0.0",
         "commander": "^7.2.0",

@@ -84,10 +84,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@confuscript/ast@workspace:packages/ast":
+  version: 0.0.0-use.local
+  resolution: "@confuscript/ast@workspace:packages/ast"
+  dependencies:
+    "@types/node": ^15.12.4
+    tsup: ^4.11.2
+    typescript: ^4.3.4
+  languageName: unknown
+  linkType: soft
+
 "@confuscript/cli@0.0.0, @confuscript/cli@workspace:packages/cli":
   version: 0.0.0-use.local
   resolution: "@confuscript/cli@workspace:packages/cli"
   dependencies:
+    "@confuscript/compiler": 0.0.0
     "@confuscript/parser": 0.0.0
     "@confuscript/types": 0.0.0
     "@types/node": ^15.12.4
@@ -99,6 +110,22 @@ __metadata:
     typescript: ^4.3.4
   bin:
     co: ./dist/cli.js
+  languageName: unknown
+  linkType: soft
+
+"@confuscript/compiler@0.0.0, @confuscript/compiler@workspace:packages/compiler":
+  version: 0.0.0-use.local
+  resolution: "@confuscript/compiler@workspace:packages/compiler"
+  dependencies:
+    "@confuscript/ast": "workspace:packages/ast"
+    "@confuscript/types": 0.0.0
+    "@types/estree": ^0.0.48
+    "@types/nearley": ^2.11.1
+    "@types/node": ^15.12.4
+    acorn: ^8.4.1
+    astring: ^1.7.5
+    tsup: ^4.11.2
+    typescript: ^4.3.4
   languageName: unknown
   linkType: soft
 
@@ -115,6 +142,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@confuscript/parser@workspace:packages/parser"
   dependencies:
+    "@confuscript/ast": "workspace:packages/ast"
     "@confuscript/grammar": 0.0.0
     "@confuscript/types": 0.0.0
     "@types/nearley": ^2.11.1
@@ -138,6 +166,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@confuscript/types@workspace:packages/types"
   dependencies:
+    "@confuscript/ast": "workspace:packages/ast"
     "@types/jju": ^1.4.1
     "@types/node": ^15.12.4
     jju: ^1.4.0
@@ -1297,6 +1326,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/estree@npm:^0.0.48":
+  version: 0.0.48
+  resolution: "@types/estree@npm:0.0.48"
+  checksum: 1f948e0a7730254ec77f543e4ac2c101f90147d21202d16b22b524e6e3e5d5a770d003fac3e218499d25f5db126f12c774bb16d8993114c7883496d358e1b7af
+  languageName: node
+  linkType: hard
+
 "@types/glob@npm:*":
   version: 7.1.3
   resolution: "@types/glob@npm:7.1.3"
@@ -1521,6 +1557,15 @@ __metadata:
   bin:
     acorn: bin/acorn
   checksum: 2bde98c28c1be9a08e41e581179b776b43396c9486ce52b2b9848d73c53df38c516b7edba4bacdc84cabc9d7a3299f3b46ef240ae261c38dbf8ddd89f635bd32
+  languageName: node
+  linkType: hard
+
+"acorn@npm:^8.4.1":
+  version: 8.4.1
+  resolution: "acorn@npm:8.4.1"
+  bin:
+    acorn: bin/acorn
+  checksum: 37720df0ecd48baf87506aff228aedc7e73379df9e9309f0b89aaff18bb3d08af892d47c0f19d5ef1723066ca74157b00adcfea9a62b21a493c91babb7d22bc3
   languageName: node
   linkType: hard
 
@@ -1815,6 +1860,15 @@ __metadata:
   version: 2.0.0
   resolution: "astral-regex@npm:2.0.0"
   checksum: bf049ee7048b70af5473580020f98faf09159af31a7fa5e223099966dc90e9e87760bd34030e19a6dcac05b45614b428f559bd71f027344d123555e524cb95ac
+  languageName: node
+  linkType: hard
+
+"astring@npm:^1.7.5":
+  version: 1.7.5
+  resolution: "astring@npm:1.7.5"
+  bin:
+    astring: bin/astring
+  checksum: 80ce805f8b6d7a9854585d5e697f4d8b275b5663544d69ac881d6211d8e28cd853e0a0443f36ecee86df868f973d1404bcfeabed4e8204a2b7618071781642c0
   languageName: node
   linkType: hard
 

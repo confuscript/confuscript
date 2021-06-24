@@ -1,11 +1,16 @@
 {
-    "name": "@confuscript/parser",
+    "name": "@confuscript/ast",
     "version": "0.0.0",
-    "description": "Package for parsing and indexing Confuscript code",
+    "description": "Typings for Confuscripts AST. Similar to @types/estree but for Confuscript.",
     "keywords": [
         "confuscript",
-        "parser"
+        "types",
+        "typings",
+        "ast"
     ],
+    "engines": {
+        "node": ">=12"
+    },
     "author": "floffah <therealfloffah@gmail.com>",
     "homepage": "https://github.com/confuscript/confuscript",
     "license": "GPL-3.0",
@@ -15,11 +20,8 @@
         "lib": "dist"
     },
     "files": [
-        "dist"
+        "lib"
     ],
-    "engines": {
-        "node": ">=12"
-    },
     "publishConfig": {
         "access": "public"
     },
@@ -27,21 +29,12 @@
         "type": "git",
         "url": "git+https://github.com/confuscript/confuscript.git"
     },
-    "scripts": {},
     "bugs": {
         "url": "https://github.com/confuscript/confuscript/issues"
     },
     "devDependencies": {
-        "@types/nearley": "^2.11.1",
         "@types/node": "^15.12.4",
         "tsup": "^4.11.2",
         "typescript": "^4.3.4"
-    },
-    "dependencies": {
-        "@confuscript/ast": "workspace:packages/ast",
-        "@confuscript/grammar": "0.0.0",
-        "@confuscript/types": "0.0.0",
-        "moo": "^0.5.1",
-        "nearley": "^2.20.1"
     }
 }

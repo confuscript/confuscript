@@ -10,7 +10,8 @@
         "packages/*"
     ],
     "scripts": {
-        "test": "yarn workspace @confuscript/test test"
+        "test": "yarn workspace @confuscript/test test",
+        "grammar": "yarn workspace @confuscript/grammar prepare"
     },
     "devDependencies": {
         "@floffah/build": "^1.0.0",

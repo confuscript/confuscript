@@ -1,37 +1,40 @@
 {
-  "name": "@confuscript/grammar",
-  "version": "0.0.0",
-  "description": "Confuscript's compiled nearley grammar",
-  "keywords": [
-    "confuscript",
-    "grammar",
-    "lang"
-  ],
-  "author": "floffah <therealfloffah@gmail.com>",
-  "homepage": "https://github.com/confuscript/confuscript",
-  "license": "GPL-3.0",
-  "main": "dist/grammar.js",
-  "directories": {
-    "lib": "dist"
-  },
-  "files": [
-    "dist"
-  ],
-  "publishConfig": {
-    "access": "public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/confuscript/confuscript.git"
-  },
-  "scripts": {
-    "prepare": "mkdir -p dist && nearleyc src/lang.ne -o dist/grammar.js"
-  },
-  "bugs": {
-    "url": "https://github.com/confuscript/confuscript/issues"
-  },
-  "devDependencies": {
-    "moo": "^0.5.1",
-    "nearley": "^2.20.1"
-  }
+    "name": "@confuscript/grammar",
+    "version": "0.0.0",
+    "description": "Confuscript's compiled nearley grammar",
+    "keywords": [
+        "confuscript",
+        "grammar",
+        "lang"
+    ],
+    "author": "floffah <therealfloffah@gmail.com>",
+    "homepage": "https://github.com/confuscript/confuscript",
+    "license": "GPL-3.0",
+    "main": "dist/grammar.js",
+    "directories": {
+        "lib": "dist"
+    },
+    "files": [
+        "dist"
+    ],
+    "engines": {
+        "node": ">=12"
+    },
+    "publishConfig": {
+        "access": "public"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/confuscript/confuscript.git"
+    },
+    "scripts": {
+        "prepare": "mkdir -p dist && nearleyc src/lang.ne -o dist/grammar.js"
+    },
+    "bugs": {
+        "url": "https://github.com/confuscript/confuscript/issues"
+    },
+    "devDependencies": {
+        "moo": "^0.5.1",
+        "nearley": "^2.20.1"
+    }
 }

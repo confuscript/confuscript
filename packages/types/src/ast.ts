@@ -1,1 +1,3 @@
-export type AST = { [path: string]: any[] };
+import { File } from "@confuscript/ast";
+
+export type AST = { [path: string]: File };
