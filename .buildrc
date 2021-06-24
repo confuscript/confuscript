@@ -11,7 +11,7 @@
             "type": "custom",
             "package": "lang",
             "command": "prepare",
-            "runInEnvironments": []
+            "runInEnvironments": [ "prod" ]
         },
         {
             "id": "types",
