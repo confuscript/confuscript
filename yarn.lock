@@ -89,7 +89,7 @@ __metadata:
   resolution: "@confuscript/ast@workspace:packages/ast"
   dependencies:
     "@types/node": ^15.12.4
-    tsup: ^4.11.2
+    tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
   linkType: soft
@@ -103,11 +103,11 @@ __metadata:
     "@confuscript/types": 0.0.0
     "@types/node": ^15.12.4
     chalk: ^4.1.1
-    commander: ^7.2.0
+    commander: ^8.0.0
     enquirer: ^2.3.6
     joycon: ^3.0.1
     source-map-support: ^0.5.19
-    tsup: ^4.11.2
+    tsup: ^4.12.0
     typescript: ^4.3.4
   bin:
     co: ./dist/cli.js
@@ -125,7 +125,7 @@ __metadata:
     "@types/node": ^15.12.4
     acorn: ^8.4.1
     astring: ^1.7.5
-    tsup: ^4.11.2
+    tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
   linkType: soft
@@ -150,7 +150,7 @@ __metadata:
     "@types/node": ^15.12.4
     moo: ^0.5.1
     nearley: ^2.20.1
-    tsup: ^4.11.2
+    tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
   linkType: soft
@@ -173,7 +173,7 @@ __metadata:
     jju: ^1.4.0
     joycon: ^3.0.1
     strip-json-comments: ^3.1.1
-    tsup: ^4.11.2
+    tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
   linkType: soft
@@ -2400,6 +2400,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^8.0.0":
+  version: 8.0.0
+  resolution: "commander@npm:8.0.0"
+  checksum: 01b32f95cd7caf1af15a27e6d3685308704fae065e9c0666c6355c610d4bca0ad0cc557c1d6ab6c39fddacd02afc31dc3a00d9a4d2929c4b016079de222c05e3
+  languageName: node
+  linkType: hard
+
 "commitizen@npm:^4.0.3, commitizen@npm:^4.2.4":
   version: 4.2.4
   resolution: "commitizen@npm:4.2.4"
@@ -2495,7 +2502,7 @@ __metadata:
     eslint-plugin-workspaces: ^0.6.2
     lerna: ^4.0.0
     npm-check-updates: ^11.7.1
-    prettier: ^2.3.1
+    prettier: ^2.3.2
     typescript: ^4.3.4
   languageName: unknown
   linkType: soft
@@ -3082,7 +3089,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.11.0, esbuild@npm:^0.11.12":
+"esbuild@npm:^0.11.0":
   version: 0.11.23
   resolution: "esbuild@npm:0.11.23"
   bin:
@@ -3091,7 +3098,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.12.4":
+"esbuild@npm:^0.12.4, esbuild@npm:^0.12.9":
   version: 0.12.9
   resolution: "esbuild@npm:0.12.9"
   bin:
@@ -6605,12 +6612,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prettier@npm:^2.3.1":
-  version: 2.3.1
-  resolution: "prettier@npm:2.3.1"
+"prettier@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "prettier@npm:2.3.2"
   bin:
     prettier: bin-prettier.js
-  checksum: 9b4a695b87ce5f510fc20feec01cce7371f0fa0b92ffe79d543f6be52e2004c532861629de4d7ab1c577e1f649dce3cfccd62cb2ca6526b1da8d9c63eb84bf36
+  checksum: 4fd89a7f6a12b13456d359fba2b1dd0fc0a17cf33f8f15953ab9f43b21ea9b09b5a2861d63b558ca0577274ce606d390e70628cf93e26d19d6cb7f19c9eebc31
   languageName: node
   linkType: hard
 
@@ -8069,15 +8076,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^4.11.2":
-  version: 4.11.2
-  resolution: "tsup@npm:4.11.2"
+"tsup@npm:^4.12.0":
+  version: 4.12.0
+  resolution: "tsup@npm:4.12.0"
   dependencies:
     cac: ^6.7.2
     chalk: ^4.1.0
     chokidar: ^3.5.1
     debug: ^4.3.1
-    esbuild: ^0.11.12
+    esbuild: ^0.12.9
     execa: ^5.0.0
     globby: ^11.0.3
     joycon: ^3.0.1
@@ -8094,7 +8101,7 @@ __metadata:
   bin:
     tsup: dist/cli-default.js
     tsup-node: dist/cli-node.js
-  checksum: 0504cdb51e65c65d37b65da0132fbc0f327bd7d2dc1f714406280be9bf6bc4b60aae68e08f647f4c852c18e85352a8c88b81e3c4f017520c380cdbe9f0f5d67e
+  checksum: 8ec0b80f10f5dd1ca8cf1f425abba693afe5310e4c48906214d2428821194535e94fb089f0e9dada39062ce3e4d85367a9d69281360e70d4677374d72de1fae1
   languageName: node
   linkType: hard
 
