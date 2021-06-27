@@ -3,7 +3,5 @@
 module.exports.TsupCommon = {
     target: "node12",
     dts: true,
-    clean: true,
     sourcemap: true,
-    moduleResolution: "node",
 };

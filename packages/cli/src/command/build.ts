@@ -1,4 +1,4 @@
-import { Parser, Indexer } from "@confuscript/parser";
+import { Indexer, Parser } from "@confuscript/parser";
 import JoyCon from "joycon";
 import {
     Config,
@@ -11,6 +11,7 @@ import { resolve } from "path";
 import { Logger } from "../util/log";
 import { Compiler } from "@confuscript/compiler";
 import { initPlugins } from "../plugins/initPlugins";
+import { writeBuilds } from "@confuscript/types";
 
 export interface BuildCommandOpts {
     debug?: boolean;
@@ -88,7 +89,7 @@ export default async function buildCommand(opts: BuildCommandOpts) {
     const indexed = await indexer.start(exported);
 
     if (opts.debug) {
-        writeTargetDebugs(exported, indexed);
+        writeTargetDebugs(exported, indexed, config.data.clean);
         log.debug("Wrote target debugs");
     }
 
@@ -106,6 +107,8 @@ export default async function buildCommand(opts: BuildCommandOpts) {
     const compiler = new Compiler(exported, indexed, config.data, plugins);
 
     compiler.start();
+
+    writeBuilds(compiler.output(), !opts.debug);
 
     log.endHeader(`Compiled project in ${Date.now() - stageStart}ms`);
 }

@@ -4,9 +4,15 @@ export default class Compiler {
     ast: AST;
     index: Index;
     config: Config;
-    plugins: Plugin[];
+    plugins: { plugins: Plugin[]; named: { [name: string]: number } };
+    built: { [file: string]: string } = {};
 
-    constructor(ast: AST, index: Index, config: Config, plugins: Plugin[]) {
+    constructor(
+        ast: AST,
+        index: Index,
+        config: Config,
+        plugins: { plugins: Plugin[]; named: { [name: string]: number } },
+    ) {
         this.ast = ast;
         this.index = index;
         this.config = config;
@@ -15,5 +21,9 @@ export default class Compiler {
 
     start() {
         //e
+    }
+
+    output() {
+        return this.built;
     }
 }

@@ -13,6 +13,8 @@
       <excludeFolder url="file://$MODULE_DIR$/packages/types/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/compiler/dist" />
       <excludeFolder url="file://$MODULE_DIR$/packages/ast/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/plugin-js/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/packages/test/target" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

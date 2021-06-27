@@ -13,13 +13,18 @@ export interface Config {
      */
     main: string;
     /**
+     * Whether or not to clean the target directory before building
+     * @TJS-default true
+     */
+    clean?: boolean;
+    /**
      * Compilation targets
      */
     target: Target[];
     /**
      * List of plugins to use. By default, this is prepended by @confuscript/plugin-js.
      */
-    plugins: ConfigPlugin[];
+    plugins?: ConfigPlugin[];
     /**
      * Whether to append or prepend core plugins.
      * @TJS-default "prepend"
@@ -41,9 +46,9 @@ export interface BaseTarget {
 export interface NodeTarget extends BaseTarget {
     /**
      * Compiler to use. Default "builtin"
-     * @TJS-default "builtin"
+     * @TJS-default "@confuscript/plugin-js"
      */
-    compiler: "builtin" | string;
+    compiler?: "@confuscript/plugin-js" | string;
     /**
      * Node target
      */

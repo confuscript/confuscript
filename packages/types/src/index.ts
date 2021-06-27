@@ -5,6 +5,7 @@ export {
     createIfNotTarget,
     createParentDirs,
     writeTargetDebugs,
+    writeBuilds,
 } from "./target";
 export { stringify } from "./json";
 export { getSource } from "./source";

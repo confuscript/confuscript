@@ -2,7 +2,9 @@ import { Config, Plugin } from "@confuscript/types";
 
 export function initPlugins(config: Config) {
     const plugins: Plugin[] = [];
+    const named: { [name: string]: number } = {};
 
+    let i = 0;
     for (const plugin of config.plugins ?? []) {
         let name: string | undefined = undefined;
         let options: any = {};
@@ -20,32 +22,32 @@ export function initPlugins(config: Config) {
         if (typeof name === "undefined")
             throw new Error("Couldnt find name for a plugin");
 
-        const found = resolvePlugin(name);
-        let p = require(found);
-        if (p.default) p = p.default;
+        let found = resolvePlugin(name);
+        if (found.default) found = found.default;
 
-        const instant: Plugin = new p();
+        const instant: Plugin = new found();
         instant.options = options;
         instant.onLoad(options);
 
-        plugins.push();
+        plugins.push(instant);
+        named[instant.name] = i;
+        i++;
     }
 
-    return plugins;
+    return {
+        plugins,
+        named,
+    };
 }
 
 export function resolvePlugin(name: string) {
     try {
-        return require.resolve(name);
+        return require(name);
     } catch (e) {
         try {
-            return require.resolve("confuscript-plugin-" + name);
+            return require(`confuscript-plugin-${name}`);
         } catch (e) {
-            try {
-                return require.resolve("@confuscript/plugin-" + name);
-            } catch (e) {
-                throw new Error("Could not find plugin " + name);
-            }
+            return require(`@confuscript/plugin-${name}`);
         }
     }
 }
