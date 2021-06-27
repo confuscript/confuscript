@@ -1,4 +1,5 @@
 import { RawString } from "../common/string";
+import { ClassVariableDefinition } from "./variable";
 
 export interface ClassDefinition {
     type: "ClassDefinition";
@@ -6,4 +7,4 @@ export interface ClassDefinition {
     content: ClassBody[];
 }
 
-export type ClassBody = ClassDefinition | string;
+export type ClassBody = ClassVariableDefinition | string;

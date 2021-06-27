@@ -1,0 +1,51 @@
+{
+    "Main": {
+        "type": "File",
+        "body": [
+            {"type": "Import", "path": ["test", "set"]},
+            "\r\n",
+            "// fdsf",
+            {
+                "type": "ClassDefinition",
+                "name": {
+                    "type": "word",
+                    "value": "Main",
+                    "text": "Main",
+                    "offset": 34,
+                    "lineBreaks": 0,
+                    "line": 4,
+                    "col": 7
+                },
+                "content": [
+                    "\r\n    ",
+                    {
+                        "type": "ClassVariableDefinition",
+                        "name": {
+                            "type": "word",
+                            "value": "test",
+                            "text": "test",
+                            "offset": 46,
+                            "lineBreaks": 0,
+                            "line": 5,
+                            "col": 5
+                        },
+                        "value": {
+                            "type": {
+                                "type": "word",
+                                "value": "string",
+                                "text": "string",
+                                "offset": 52,
+                                "lineBreaks": 0,
+                                "line": 5,
+                                "col": 11
+                            },
+                            "value": null
+                        }
+                    },
+                    "\r\n"
+                ]
+            },
+            "\r\n"
+        ]
+    }
+}

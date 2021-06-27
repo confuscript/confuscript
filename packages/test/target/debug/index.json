@@ -1,0 +1,6 @@
+{
+    "Main": {
+        "mainclass": "Main",
+        "classes": {"Main": {"index": 3, "vars": {"test": 1}}}
+    }
+}

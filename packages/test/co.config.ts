@@ -1,6 +1,6 @@
 import { Config } from "@confuscript/types";
 
-export const CoConfig: Config = {
+export const confuscript: Config = {
     name: "Confuscript-Test",
     version: "0.0.1",
     main: "Main.co",

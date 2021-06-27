@@ -88,7 +88,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@confuscript/ast@workspace:packages/ast"
   dependencies:
-    "@types/node": ^15.12.4
+    "@types/node": ^15.12.5
     tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
@@ -101,7 +101,7 @@ __metadata:
     "@confuscript/compiler": 0.0.0
     "@confuscript/parser": 0.0.0
     "@confuscript/types": 0.0.0
-    "@types/node": ^15.12.4
+    "@types/node": ^15.12.5
     chalk: ^4.1.1
     commander: ^8.0.0
     enquirer: ^2.3.6
@@ -122,7 +122,7 @@ __metadata:
     "@confuscript/types": 0.0.0
     "@types/estree": ^0.0.48
     "@types/nearley": ^2.11.1
-    "@types/node": ^15.12.4
+    "@types/node": ^15.12.5
     acorn: ^8.4.1
     astring: ^1.7.5
     tsup: ^4.12.0
@@ -147,7 +147,7 @@ __metadata:
     "@confuscript/grammar": 0.0.0
     "@confuscript/types": 0.0.0
     "@types/nearley": ^2.11.1
-    "@types/node": ^15.12.4
+    "@types/node": ^15.12.5
     moo: ^0.5.1
     nearley: ^2.20.1
     tsup: ^4.12.0
@@ -169,10 +169,11 @@ __metadata:
   dependencies:
     "@confuscript/ast": "workspace:packages/ast"
     "@types/jju": ^1.4.1
-    "@types/node": ^15.12.4
+    "@types/node": ^15.12.5
     jju: ^1.4.0
     joycon: ^3.0.1
     strip-json-comments: ^3.1.1
+    sucrase: ^3.19.0
     tsup: ^4.12.0
     typescript: ^4.3.4
   languageName: unknown
@@ -1388,7 +1389,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*, @types/node@npm:^15.12.4":
+"@types/node@npm:*":
   version: 15.12.4
   resolution: "@types/node@npm:15.12.4"
   checksum: 64b121a7e805379382aeb3eefed56c4c34f1ebf5e818ba2c732e43beebc4fbde20be438f3eaaffd8dba5062f0e0c9ae085127b7239906d170eda816885a6c508
@@ -1399,6 +1400,13 @@ __metadata:
   version: 14.17.4
   resolution: "@types/node@npm:14.17.4"
   checksum: 947ada8b39710c8fedf60f342b4ac1a08de8ebfbd4f09471b4e0006c2b0c7b832513e4dc2cdd455af5236910e2e725899bd9ce0aaecd097b2867d3e2ab62d8c6
+  languageName: node
+  linkType: hard
+
+"@types/node@npm:^15.12.5":
+  version: 15.12.5
+  resolution: "@types/node@npm:15.12.5"
+  checksum: 42485de7a0b7277ddaae25b36ab4174fc8f23e8a5de9ccaedd002ecec17135c48227a5e09088d181c2bc34fe6b2064feb4a468954372076fd8addac2f72dad7e
   languageName: node
   linkType: hard
 
@@ -7832,7 +7840,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sucrase@npm:^3.18.1":
+"sucrase@npm:^3.18.1, sucrase@npm:^3.19.0":
   version: 3.19.0
   resolution: "sucrase@npm:3.19.0"
   dependencies:

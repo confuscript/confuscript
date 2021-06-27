@@ -2,6 +2,7 @@ import { basename, resolve } from "path";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { AST } from "./ast";
 import { stringify } from "./json";
+import { Index } from "@confuscript/parser";
 
 export function createIfNotTarget(wd = process.cwd()) {
     const dir = resolve(wd, "target");
@@ -11,17 +12,20 @@ export function createIfNotTarget(wd = process.cwd()) {
     return dir;
 }
 
-export function writeTargetDebugs(ast: AST, wd = process.cwd()) {
+export function writeTargetDebugs(ast: AST, index: Index, wd = process.cwd()) {
     const dir = createIfNotTarget(wd);
     const debugDir = resolve(dir, "debug");
 
     if (!existsSync(debugDir)) mkdirSync(debugDir, { recursive: true });
 
-    for (const key of Object.keys(ast)) {
-        const file = resolve(debugDir, key + ".json");
-        createParentDirs(file);
-        writeFileSync(file, stringify(ast[key]));
-    }
+    const astfile = resolve(debugDir, "ast.json");
+    const indexfile = resolve(debugDir, "index.json");
+
+    createParentDirs(astfile);
+    createParentDirs(indexfile);
+
+    writeFileSync(astfile, stringify(ast));
+    writeFileSync(indexfile, stringify(index));
 }
 
 export function createParentDirs(path: string) {
