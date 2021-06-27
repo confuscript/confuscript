@@ -1,3 +1,5 @@
+export { default as Compiler } from "./Compiler";
+
 // VVV this is just a test for nodejs compiling VVV
 
 // import { generate } from "astring";

@@ -67,6 +67,17 @@
                 "dev",
                 "prod"
             ]
+        },
+        {
+            "id": "plugin-js",
+            "type": "custom",
+            "package": "plugin-js",
+            "command": "tsup",
+            "devcommand": "tsup --watch",
+            "runInEnvironments": [
+                "dev",
+                "prod"
+            ]
         }
     ]
 }

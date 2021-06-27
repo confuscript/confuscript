@@ -1,15 +1,13 @@
 {
-    "name": "@confuscript/types",
+    "name": "@confuscript/plugin-js",
     "version": "0.0.0",
-    "description": "Common typings and other structures for confuscript pacakges",
+    "description": "JavaScript/NodeJS compilation plugin for Confuscript",
     "keywords": [
         "confuscript",
-        "types",
-        "typings"
+        "plugin",
+        "node",
+        "js"
     ],
-    "engines": {
-        "node": ">=14"
-    },
     "author": "floffah <therealfloffah@gmail.com>",
     "homepage": "https://github.com/confuscript/confuscript",
     "license": "GPL-3.0",
@@ -19,7 +17,7 @@
         "lib": "dist"
     },
     "files": [
-        "lib"
+        "dist"
     ],
     "publishConfig": {
         "access": "public"
@@ -28,24 +26,21 @@
         "type": "git",
         "url": "git+https://github.com/confuscript/confuscript.git"
     },
+    "scripts": {
+        "test": "echo \"Error: run tests from root\" && exit 1"
+    },
     "bugs": {
         "url": "https://github.com/confuscript/confuscript/issues"
     },
-    "scripts": {
-        "prepare": "typescript-json-schema src/config.ts Config -o config.schema.json"
-    },
     "devDependencies": {
-        "@types/jju": "^1.4.1",
+        "@types/estree": "^0.0.48",
         "@types/node": "^15.12.5",
         "tsup": "^4.12.0",
-        "typescript": "^4.3.4",
-        "typescript-json-schema": "^0.50.1"
+        "typescript": "^4.3.4"
     },
     "dependencies": {
-        "@confuscript/ast": "0.0.0",
-        "jju": "^1.4.0",
-        "joycon": "^3.0.1",
-        "strip-json-comments": "^3.1.1",
-        "sucrase": "^3.19.0"
+        "@confuscript/types": "0.0.0",
+        "acorn": "^8.4.1",
+        "astring": "^1.7.5"
     }
 }

@@ -16,7 +16,18 @@ export interface Config {
      * Compilation targets
      */
     target: Target[];
+    /**
+     * List of plugins to use. By default, this is prepended by @confuscript/plugin-js.
+     */
+    plugins: ConfigPlugin[];
+    /**
+     * Whether to append or prepend core plugins.
+     * @TJS-default "prepend"
+     */
+    pluginMode?: "prepend" | "append";
 }
+
+export type ConfigPlugin = string | [string | any];
 
 export type Target = NodeTarget;
 

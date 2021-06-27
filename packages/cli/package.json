@@ -44,6 +44,7 @@
     "dependencies": {
         "@confuscript/compiler": "0.0.0",
         "@confuscript/parser": "0.0.0",
+        "@confuscript/plugin-js": "0.0.0",
         "@confuscript/types": "0.0.0",
         "chalk": "^4.1.1",
         "commander": "^8.0.0",

@@ -1,0 +1,75 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "NodeTarget": {
+            "properties": {
+                "bundle": {
+                    "default": true,
+                    "description": "Whether or not to bundle to a single file",
+                    "type": "boolean"
+                },
+                "compiler": {
+                    "default": "builtin",
+                    "description": "Compiler to use. Default \"builtin\"",
+                    "type": "string"
+                },
+                "out": {
+                    "default": "dist",
+                    "description": "If bundling is enabled, this acts as the out file,\nif bundling is disabled, this acts as the out dir",
+                    "type": "string"
+                },
+                "target": {
+                    "description": "Node target",
+                    "enum": [
+                        "node"
+                    ],
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "properties": {
+        "main": {
+            "description": "Main file.\nCan be overwritten by a target",
+            "type": "string"
+        },
+        "name": {
+            "description": "Project name",
+            "type": "string"
+        },
+        "plugins": {
+            "description": "List of plugins to use. By default, this is prepended by @confuscript/plugin-node.",
+            "items": {
+                "anyOf": [
+                    {
+                        "items": [
+                            {
+                            }
+                        ],
+                        "maxItems": 1,
+                        "minItems": 1,
+                        "type": "array"
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "target": {
+            "description": "Compilation targets",
+            "items": {
+                "$ref": "#/definitions/NodeTarget"
+            },
+            "type": "array"
+        },
+        "version": {
+            "description": "Semver version",
+            "type": "string"
+        }
+    },
+    "type": "object"
+}
+

@@ -2,13 +2,20 @@ import chalk from "chalk";
 
 export class Logger {
     doDebug?: boolean;
+    private hadPreviousStart = false;
 
     constructor(debug?: boolean) {
         this.doDebug = debug;
     }
 
     startHeader(...msgs: string[]) {
+        if (this.hadPreviousStart) this.aloneinfo(chalk.gray("━━━━━━"));
+        else if (!this.hadPreviousStart) this.hadPreviousStart = true;
         this.log(chalk.blue("┌"), ...msgs);
+    }
+
+    aloneinfo(...msgs: string[]) {
+        this.log(chalk.blue("─"), ...msgs);
     }
 
     info(...msgs: string[]) {
