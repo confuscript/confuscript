@@ -2,7 +2,7 @@ import { basename, resolve } from "path";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
 import { AST } from "./ast";
 import { stringify } from "./json";
-import { Index } from "@confuscript/parser";
+import { Index } from "./indexing";
 
 export function createIfNotTarget(wd = process.cwd()) {
     const dir = resolve(wd, "target");
