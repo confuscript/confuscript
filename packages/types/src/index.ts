@@ -8,3 +8,4 @@ export {
 } from "./target";
 export { stringify } from "./json";
 export { getSource } from "./source";
+export { Index } from "./indexing";

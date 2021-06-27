@@ -1,6 +1,5 @@
 import Parser from "../parsing/Parser";
-import { AST } from "@confuscript/types";
-import { Index } from "./index";
+import { AST, Index } from "@confuscript/types";
 
 export default class Indexer {
     parser?: Parser;
