@@ -1,5 +1,6 @@
 import PluginManager from "./pluginmanager";
 import { Config, Target } from "./config";
+import { Compiler } from "@confuscript/compiler/src";
 
 export default class Plugin<Options extends any = any> {
     name: string;
@@ -18,12 +19,12 @@ export default class Plugin<Options extends any = any> {
      * Ran just before the compiler starts compiling.
      * This is where you should register your node handlers.
      */
-    onPreCompile(manager: PluginManager): void | any {
+    onPreCompile(manager: PluginManager<Compiler>): void | any {
         return manager;
     }
 
     doFinal(
-        manager: PluginManager,
+        manager: PluginManager<Compiler>,
         context: any & {
             target: Target;
             config: Config;

@@ -54,6 +54,13 @@ export default class Indexer {
                                     if (!classindex.vars) classindex.vars = {};
                                     classindex.vars[contentpart.name.value] =
                                         cindex;
+                                } else if (
+                                    contentpart.type === "ClassMethodDefinition"
+                                ) {
+                                    if (!classindex.methods)
+                                        classindex.methods = {};
+                                    classindex.methods[contentpart.name.value] =
+                                        cindex;
                                 }
                             }
                         }

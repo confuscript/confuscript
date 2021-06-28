@@ -1,6 +1,4 @@
-import { Compiler } from "@confuscript/compiler";
-
-export default class PluginManager {
+export default class PluginManager<Compiler> {
     compiler: Compiler;
 
     constructor(compiler: Compiler) {

@@ -9,11 +9,13 @@ export const confuscript: Config = {
             id: "unbundled",
             target: "node",
             bundle: false,
+            minify: true,
         },
         {
             id: "bundled",
             target: "node",
             bundle: true,
+            minify: false,
         },
     ],
 };

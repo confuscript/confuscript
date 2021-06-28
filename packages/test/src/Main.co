@@ -3,4 +3,8 @@ import test.set
 
 class Main {
     test: string;
+
+    main(bog: string, egg: int, ) {
+
+    }
 }

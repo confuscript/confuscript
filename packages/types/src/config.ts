@@ -66,4 +66,9 @@ export interface NodeTarget extends BaseTarget {
      * @TJS-default true
      */
     bundle?: boolean;
+    /**
+     * Whether or not to minify the output files
+     * @TJS-default true
+     */
+    minify?: boolean;
 }

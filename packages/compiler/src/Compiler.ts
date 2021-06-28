@@ -7,7 +7,7 @@ import {
     Target,
 } from "@confuscript/types";
 import { AllNodes, ClassDefinition, NodeTypes } from "@confuscript/ast";
-import { inspect } from "util";
+import { ClassMethodDefinition } from "@confuscript/ast/dist/structures/class/method";
 
 export type NodeHandler<Type extends NodeTypes> = (
     node: AllNodes & { type: Type },
@@ -24,7 +24,7 @@ export default class Compiler {
 
     initialtree: { [file: string]: any };
     built: { [id: string]: { [file: string]: string } } = {};
-    manager: PluginManager;
+    manager: PluginManager<this>;
 
     handlers: Map<NodeTypes, NodeHandler<any>>;
     targets: Map<string, TargetFN> = new Map();
@@ -32,7 +32,7 @@ export default class Compiler {
     finalfn:
         | undefined
         | ((
-              manager: PluginManager,
+              manager: PluginManager<this>,
               context: any,
               prebuilt: { [p: string]: any },
           ) => any);
@@ -84,14 +84,14 @@ export default class Compiler {
                         fileindex.mainclass,
                 );
 
-            // if (!classindex.methods)
-            //     throw new Error(`${filename} has no methods`);
-            // const methodindex = classindex.methods[methodname];
+            if (!classindex.methods)
+                throw new Error(`${filename} has no methods`);
+            const methodindex = classindex.methods[methodname];
 
-            // if (!methodindex)
-            //     throw new Error(
-            //         `No method in class ${fileindex.mainclass} of name ${methodname}`,
-            //     );
+            if (!methodindex)
+                throw new Error(
+                    `No method in class ${fileindex.mainclass} of name ${methodname}`,
+                );
 
             const file = this.ast[filename];
             if (!file) return;
@@ -112,12 +112,10 @@ export default class Compiler {
                 ...context,
             };
 
-            // const method = clss.content[methodindex];
-            // if (!method) return;
+            const method = clss.content[methodindex] as ClassMethodDefinition;
+            if (!method) return;
 
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            this.initialtree[filename] = this.processClass(clss, {});
+            this.initialtree[filename] = this.processEntrypoint(clss, method);
 
             if (typeof this.finalfn !== "function")
                 throw new Error("No final function registered");
@@ -132,18 +130,20 @@ export default class Compiler {
         }
     }
 
-    processClass(c: ClassDefinition, _m: any) {
+    processEntrypoint(c: ClassDefinition, m: ClassMethodDefinition) {
         if (this.handlers.has("ClassDefinition")) {
-            return inspect(
-                (
-                    this.handlers.get(
-                        "ClassDefinition",
-                    ) as NodeHandler<"ClassDefinition">
-                )(c, []),
-            );
+            const body: any[] = [];
+
+            console.log(m);
+
+            return (
+                this.handlers.get(
+                    "ClassDefinition",
+                ) as NodeHandler<"ClassDefinition">
+            )(c, body);
         }
 
-        return "null";
+        return null;
     }
 
     registerTarget(name: string, context: TargetFN) {

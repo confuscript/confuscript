@@ -4,13 +4,14 @@ import { JSProp } from "./ast/prop";
 import { ClassDeclaration, Property } from "estree";
 import { makeRunBundle } from "./bundle";
 import { generate } from "astring";
+import { Compiler } from "@confuscript/compiler";
 
 export default class JSPlugin extends Plugin {
     constructor() {
         super("js");
     }
 
-    onPreCompile(manager: PluginManager) {
+    onPreCompile(manager: PluginManager<Compiler>) {
         manager.compiler.registerTarget("node", () => {
             manager.compiler.handle("ClassDefinition", (node, body) =>
                 JSClass(node.name.value, body ?? []),
@@ -25,7 +26,7 @@ export default class JSPlugin extends Plugin {
     }
 
     doFinal(
-        manager: PluginManager,
+        manager: PluginManager<Compiler>,
         context: any & {
             target: Target;
             config: Config;
@@ -57,10 +58,7 @@ export default class JSPlugin extends Plugin {
                         type: "ClassExpression",
                         id: null,
                         superClass: null,
-                        body: clss.body ?? {
-                            type: "ClassBody",
-                            body: [],
-                        },
+                        body: clss.body,
                     },
                     kind: "init",
                 });
@@ -75,6 +73,12 @@ export default class JSPlugin extends Plugin {
                     context.mainclass,
                     context.mainmethod,
                 ),
+                context.target.minify ?? true
+                    ? {
+                          indent: "",
+                          lineEnd: "",
+                      }
+                    : undefined,
             );
         }
 
