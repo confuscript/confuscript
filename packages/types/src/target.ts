@@ -8,7 +8,10 @@ export function createIfNotTarget(clean?: boolean, wd = process.cwd()) {
     const dir = resolve(wd, "target");
 
     if (clean || typeof clean === "undefined") {
-        if (existsSync(dir)) rmSync(dir, { recursive: true });
+        if (existsSync(dir))
+            try {
+                rmSync(dir, { recursive: true, force: true, maxRetries: 10 });
+            } catch (e) {}
         mkdirSync(dir, { recursive: true });
     } else if (!existsSync(dir)) mkdirSync(dir, { recursive: true });
 
@@ -37,7 +40,7 @@ export function writeTargetDebugs(
 }
 
 export function writeBuilds(
-    built: { [file: string]: string },
+    built: { [id: string]: { [file: string]: string } },
     clean?: boolean,
     wd = process.cwd(),
 ) {
@@ -46,8 +49,13 @@ export function writeBuilds(
 
     if (!existsSync(buildDir)) mkdirSync(buildDir);
 
-    for (const file of Object.keys(built)) {
-        writeFileSync(resolve(buildDir, file), built[file]);
+    for (const idkey of Object.keys(built)) {
+        const id = built[idkey];
+        if (!existsSync(resolve(buildDir, idkey)))
+            mkdirSync(resolve(buildDir, idkey), { recursive: true });
+        for (const file of Object.keys(id)) {
+            writeFileSync(resolve(buildDir, idkey, file), id[file]);
+        }
     }
 }
 

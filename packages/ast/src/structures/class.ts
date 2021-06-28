@@ -7,4 +7,5 @@ export interface ClassDefinition {
     content: ClassBody[];
 }
 
-export type ClassBody = ClassVariableDefinition | string;
+export type ClassBodyNodes = ClassVariableDefinition;
+export type ClassBody = ClassBodyNodes | string;

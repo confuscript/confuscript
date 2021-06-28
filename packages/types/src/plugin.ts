@@ -1,13 +1,46 @@
+import PluginManager from "./pluginmanager";
+import { Config, Target } from "./config";
+
 export default class Plugin<Options extends any = any> {
     name: string;
     options: Options;
 
-    constructor(name: string) {
+    protected constructor(name: string) {
         this.name = name;
     }
 
     /**
      * Ran while loading the plugin (usually during the project resolution step
      */
-    onLoad(_options?: Options) {}
+    onLoad?(options?: Options): void | any;
+
+    /**
+     * Ran just before the compiler starts compiling.
+     * This is where you should register your node handlers.
+     */
+    onPreCompile(manager: PluginManager): void | any {
+        return manager;
+    }
+
+    doFinal(
+        manager: PluginManager,
+        context: any & {
+            target: Target;
+            config: Config;
+            mainclass: string;
+            mainmethod: string;
+        },
+        prebuilt: { [file: string]: any },
+    ): any {
+        manager;
+        context;
+
+        const final: any = {};
+
+        for (const build of Object.keys(prebuilt)) {
+            final[build] = prebuilt[build].toString();
+        }
+
+        return final;
+    }
 }

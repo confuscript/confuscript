@@ -4,6 +4,7 @@ import {
     Config,
     getSource,
     loadConfig,
+    PluginManager,
     writeTargetDebugs,
 } from "@confuscript/types";
 import { existsSync } from "fs";
@@ -105,6 +106,12 @@ export default async function buildCommand(opts: BuildCommandOpts) {
     log.startHeader("Compiling project...");
 
     const compiler = new Compiler(exported, indexed, config.data, plugins);
+    const manager = new PluginManager(compiler);
+    compiler.manager = manager;
+
+    for (const plugin of plugins.plugins) {
+        if (plugin.onPreCompile) plugin.onPreCompile(manager);
+    }
 
     compiler.start();
 

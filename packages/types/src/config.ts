@@ -8,10 +8,10 @@ export interface Config {
      */
     version: string;
     /**
-     * Main file.
+     * Main file and method.
      * Can be overwritten by a target
      */
-    main: string;
+    main?: `${string}.${string}`;
     /**
      * Whether or not to clean the target directory before building
      * @TJS-default true
@@ -41,6 +41,14 @@ export interface BaseTarget {
      * Target
      */
     target: "node";
+    /**
+     * The id of the target. If there are multiple targets, this will be used as the output dir name inside target/build
+     */
+    id: string;
+    /**
+     * Use a different main path
+     */
+    main?: `${string}.${string}`;
 }
 
 export interface NodeTarget extends BaseTarget {
@@ -57,11 +65,5 @@ export interface NodeTarget extends BaseTarget {
      * Whether or not to bundle to a single file
      * @TJS-default true
      */
-    bundle: boolean;
-    /**
-     * If bundling is enabled, this acts as the out file,
-     * if bundling is disabled, this acts as the out dir
-     * @TJS-default "dist"
-     */
-    out: string;
+    bundle?: boolean;
 }

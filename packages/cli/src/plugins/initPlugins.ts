@@ -27,7 +27,7 @@ export function initPlugins(config: Config) {
 
         const instant: Plugin = new found();
         instant.options = options;
-        instant.onLoad(options);
+        if (instant.onLoad) instant.onLoad(options);
 
         plugins.push(instant);
         named[instant.name] = i;

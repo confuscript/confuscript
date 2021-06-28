@@ -11,3 +11,4 @@ export { stringify } from "./json";
 export { getSource } from "./source";
 export { Index } from "./indexing";
 export { default as Plugin } from "./plugin";
+export { default as PluginManager } from "./pluginmanager";
