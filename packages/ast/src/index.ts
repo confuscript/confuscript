@@ -18,3 +18,9 @@ export { ClassDefinition, ClassBody, ClassBodyNodes } from "./structures/class";
 export { Import }; //from "./structures/imports";
 export { ClassVariableDefinition } from "./structures/variable";
 export { Value, ValueType } from "./util/value";
+export {
+    ClassMethodDefinition,
+    FormalParameter,
+    MethodBody,
+    MethodBodyNodes,
+} from "./structures/class/method";

@@ -7,7 +7,7 @@ import {
     Target,
 } from "@confuscript/types";
 import { AllNodes, ClassDefinition, NodeTypes } from "@confuscript/ast";
-import { ClassMethodDefinition } from "@confuscript/ast/dist/structures/class/method";
+import { ClassMethodDefinition } from "@confuscript/ast";
 
 export type NodeHandler<Type extends NodeTypes> = (
     node: AllNodes & { type: Type },
