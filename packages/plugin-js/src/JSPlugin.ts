@@ -5,6 +5,8 @@ import { ClassDeclaration, Property } from "estree";
 import { makeRunBundle } from "./bundle";
 import { generate } from "astring";
 import { Compiler } from "@confuscript/compiler";
+import { JSIdentifier } from "./ast/id";
+import { JSClassMethod } from "./ast/method";
 
 export default class JSPlugin extends Plugin {
     constructor() {
@@ -13,6 +15,7 @@ export default class JSPlugin extends Plugin {
 
     onPreCompile(manager: PluginManager<Compiler>) {
         manager.compiler.registerTarget("node", () => {
+            // handlers
             manager.compiler.handle("ClassDefinition", (node, body) =>
                 JSClass(node.name.value, body ?? []),
             );
@@ -20,8 +23,27 @@ export default class JSPlugin extends Plugin {
                 JSProp(node.name.value, false, false, null),
             );
 
+            manager.compiler.handle("FormalParameter", (node) =>
+                JSIdentifier(node.name.value),
+            );
+
+            manager.compiler.handle(
+                "ClassMethodDefinition",
+                (node, body, params) =>
+                    JSClassMethod(node.name.value, body, params),
+            );
+
             manager.compiler.finalfn = (manager, context, prebuilt) =>
                 this.doFinal(manager, context, prebuilt);
+
+            // logic
+            manager.compiler.handleLogic(
+                "MethodApplication",
+                (
+                    clss: ReturnType<typeof JSClass>,
+                    method: ReturnType<typeof JSClassMethod>,
+                ) => clss.body.body.push(method),
+            );
         });
     }
 

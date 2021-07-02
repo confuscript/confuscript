@@ -1,4 +1,5 @@
 import { ClassDeclaration, MethodDefinition, PropertyDefinition } from "estree";
+import { JSIdentifier } from "./id";
 
 export const JSClass = (
     name: string,
@@ -6,10 +7,7 @@ export const JSClass = (
 ) =>
     ({
         type: "ClassDeclaration",
-        id: {
-            type: "Identifier",
-            name,
-        },
+        id: JSIdentifier(name),
         body: {
             type: "ClassBody",
             body,

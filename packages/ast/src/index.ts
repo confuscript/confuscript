@@ -1,5 +1,6 @@
 import { Import } from "./structures/imports";
 import { ClassBodyNodes, ClassDefinition } from "./structures/class";
+import { FormalParameter } from "./structures/class/method";
 
 export interface File {
     type: "File";
@@ -10,7 +11,11 @@ export type RootNode = File;
 
 export type RawBodyNodes = Import | ClassDefinition;
 export type BodyNode = RawBodyNodes | string;
-export type AllNodes = RootNode | RawBodyNodes | ClassBodyNodes;
+export type AllNodes =
+    | RootNode
+    | RawBodyNodes
+    | ClassBodyNodes
+    | FormalParameter;
 export type NodeTypes = AllNodes["type"];
 
 export { RawString } from "./common/string";

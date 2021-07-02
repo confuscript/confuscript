@@ -6,12 +6,18 @@ import {
     PluginManager,
     Target,
 } from "@confuscript/types";
-import { AllNodes, ClassDefinition, NodeTypes } from "@confuscript/ast";
-import { ClassMethodDefinition } from "@confuscript/ast";
+import {
+    AllNodes,
+    ClassDefinition,
+    ClassMethodDefinition,
+    NodeTypes,
+} from "@confuscript/ast";
+import { LogicHandler, LogicTypes } from "./allLogic";
 
 export type NodeHandler<Type extends NodeTypes> = (
     node: AllNodes & { type: Type },
     body?: any,
+    ...args: any[]
 ) => any;
 
 export type TargetFN = (config: Config, target: Target) => any;
@@ -27,6 +33,7 @@ export default class Compiler {
     manager: PluginManager<this>;
 
     handlers: Map<NodeTypes, NodeHandler<any>>;
+    logicHandlers: Map<LogicTypes, LogicHandler<any>> = new Map();
     targets: Map<string, TargetFN> = new Map();
 
     finalfn:
@@ -52,6 +59,7 @@ export default class Compiler {
     start() {
         for (const target of this.config.target) {
             this.handlers = new Map();
+            this.logicHandlers = new Map();
             this.initialtree = {};
             this.finalfn = undefined;
 
@@ -115,7 +123,8 @@ export default class Compiler {
             const method = clss.content[methodindex] as ClassMethodDefinition;
             if (!method) return;
 
-            this.initialtree[filename] = this.processEntrypoint(clss, method);
+            //this.initialtree[filename] = this.processEntrypoint(clss, method);
+            this.methodCall(filename, methodname);
 
             if (typeof this.finalfn !== "function")
                 throw new Error("No final function registered");
@@ -130,20 +139,67 @@ export default class Compiler {
         }
     }
 
-    processEntrypoint(c: ClassDefinition, m: ClassMethodDefinition) {
+    processEntrypoint(c: ClassDefinition, _m: ClassMethodDefinition) {
         if (this.handlers.has("ClassDefinition")) {
             const body: any[] = [];
 
-            console.log(m);
-
-            return (
-                this.handlers.get(
-                    "ClassDefinition",
-                ) as NodeHandler<"ClassDefinition">
-            )(c, body);
+            return this.getHandler("ClassDefinition", true)(c, body);
         }
 
         return null;
+    }
+
+    methodCall(filename: string, methodname: string, classname?: string) {
+        const fileindex = this.index[filename];
+        if (!fileindex) throw new Error("No such file " + filename);
+        const file = this.ast[filename];
+
+        const classindex = fileindex.classes[classname ?? fileindex.mainclass];
+        if (!classindex)
+            throw new Error(
+                "No such class " + classname ?? fileindex.mainclass,
+            );
+        const clss = file.body[classindex.index] as ClassDefinition;
+
+        const methodindex = classindex.methods[methodname];
+        const method = clss.content[methodindex] as ClassMethodDefinition;
+
+        const params: any[] = [];
+
+        for (const param of method.parameters) {
+            params.push(this.getHandler("FormalParameter", true)(param));
+        }
+
+        const result = this.getHandler("ClassMethodDefinition", true)(
+            method,
+            [],
+            params,
+        );
+
+        if (!this.initialtree[filename]) {
+            this.initialtree[filename] = this.getHandler(
+                "ClassDefinition",
+                true,
+            )(clss, [result]);
+        } else {
+            this.getLogicHandler("MethodApplication")(
+                this.initialtree[filename],
+                result,
+            );
+        }
+    }
+
+    getHandler<Type extends NodeTypes>(
+        type: Type,
+        required?: boolean,
+    ): NodeHandler<Type> {
+        const found = this.handlers.get(type);
+        if (required && !found) throw new Error("No type for " + type);
+        return found ?? (() => ({}));
+    }
+
+    getLogicHandler<Type extends LogicTypes>(type: Type): LogicHandler<Type> {
+        return this.logicHandlers.get(type) ?? (() => ({}));
     }
 
     registerTarget(name: string, context: TargetFN) {
@@ -158,6 +214,13 @@ export default class Compiler {
         //     throw new Error("Already registered type " + type);
 
         this.handlers.set(type, handler);
+    }
+
+    handleLogic<Type extends LogicTypes>(
+        type: Type,
+        handler: LogicHandler<Type>,
+    ) {
+        this.logicHandlers.set(type, handler);
     }
 
     output() {

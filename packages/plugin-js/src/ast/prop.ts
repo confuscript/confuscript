@@ -1,4 +1,5 @@
 import { PropertyDefinition } from "estree";
+import { JSIdentifier } from "./id";
 
 export const JSProp = (
     name: string,
@@ -11,8 +12,5 @@ export const JSProp = (
         static: isStatic,
         computed,
         value,
-        key: {
-            type: "Identifier",
-            name,
-        },
+        key: JSIdentifier(name),
     } as PropertyDefinition);
